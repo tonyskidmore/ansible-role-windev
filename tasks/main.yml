@@ -5,3 +5,13 @@
   win_chocolatey:
     name: git
     state: present
+  register: git_install
+
+- name: debug git_install
+  debug:
+    var: git_install
+
+- name: Install terraform
+  win_chocolatey:
+    name: terraform
+    state: present
