@@ -1,0 +1,7 @@
+---
+
+  # will always need git and will trigger Chocolatey install
+- name: Install git
+  win_chocolatey:
+    name: git
+    state: present
