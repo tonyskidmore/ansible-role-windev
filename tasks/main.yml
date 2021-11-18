@@ -17,7 +17,11 @@
     - git_install.warnings is defined
     - git_install.warnings is search("was installed during this task")
 
-- name: Install terraform
+- name: Install terraform packages
   win_chocolatey:
     name: terraform
     state: present
+  loop: "{{ terraform_packages }}"
+  when:
+    - terraform_packages | length
+
