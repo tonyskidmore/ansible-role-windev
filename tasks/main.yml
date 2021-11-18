@@ -34,13 +34,13 @@
   when:
     - azure_packages | length
 
-- name: Install windows packages
-  win_chocolatey:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ windows_packages }}"
-  when:
-    - windows_packages | length
+# - name: Install windows packages
+#   win_chocolatey:
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ windows_packages }}"
+#   when:
+#     - windows_packages | length
 
 - name: Install Python packages
   win_chocolatey:
