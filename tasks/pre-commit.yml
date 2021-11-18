@@ -39,7 +39,7 @@
 - name: Pipx ensure path
   win_path:
     elements:
-      - "C:\Program Files (x86)\pipx_bin"
+      - 'C:\Program Files (x86)\pipx_bin'
 
 - name: Pipx install pre-commit
   win_command: "pipx install pre-commit"
