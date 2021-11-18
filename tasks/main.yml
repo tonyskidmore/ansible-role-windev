@@ -51,8 +51,8 @@
     - python_packages | length
 
   # TODO: add some conditional checks here
-- name: Reboot before WSL install
-  win_reboot:
+# - name: Reboot before WSL install
+#   win_reboot:
 
 - name: Install Windows Subsystem for Linux (WSL) packages
   win_chocolatey:
