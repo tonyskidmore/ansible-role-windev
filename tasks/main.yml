@@ -17,26 +17,27 @@
     - git_install.warnings is defined
     - git_install.warnings is search("was installed during this task")
 
+# feed in a list
 - name: Install terraform packages
   win_chocolatey:
     name: "{{ terraform_packages }}"
     state: present
-  # loop: "{{ terraform_packages }}"
   when:
     - terraform_packages | length
 
-# - name: Install azure packages
-#   win_chocolatey: azure_packages
-#     name: "{{ item }}"
-#     state: present
-#   loop: "{{ azure_packages }}"
-#   when:
-#     - azure_packages | length
+# or loop a list
+- name: Install azure packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ azure_packages }}"
+  when:
+    - azure_packages | length
 
-# - name: Install windows packages
-#   win_chocolatey: windows_packages
-#     name: "{{ item }}"
-#     state: present
-#   loop: "{{ windows_packages }}"
-#   when:
-#     - windows_packages | length
+- name: Install windows packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ windows_packages }}"
+  when:
+    - windows_packages | length
