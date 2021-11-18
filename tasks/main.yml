@@ -35,9 +35,17 @@
     - azure_packages | length
 
 - name: Install windows packages
-  win_package:
+  win_chocolatey:
     name: "{{ item }}"
     state: present
   loop: "{{ windows_packages }}"
   when:
     - windows_packages | length
+
+- name: Install Windows Subsystem for Linux (WSL) packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ wsl_packages }}"
+  when:
+    - wsl_packages | length

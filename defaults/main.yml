@@ -21,4 +21,4 @@ golang_packages:
   - dep
 
 windows_packages:
-  - Microsoft.WindowsTerminal
+  - microsoft-windows-terminal
