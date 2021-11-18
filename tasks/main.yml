@@ -50,6 +50,7 @@
   when:
     - python_packages | length
 
+  # TODO: add some conditional checks here
 - name: Reboot before WSL install
   win_reboot:
 
@@ -76,3 +77,9 @@
   loop: "{{ vscode_packages }}"
   when:
     - vscode_packages | length
+
+- name: Install pre-commit
+  include_tasks:
+    file: pre-commit.yml
+  when:
+    - install_pre_commit

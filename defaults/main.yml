@@ -36,4 +36,5 @@ win_features:
 
 vscode_packages:
   - vscode
-  
+
+install_pre_commit: yes
