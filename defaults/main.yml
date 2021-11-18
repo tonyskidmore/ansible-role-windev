@@ -22,3 +22,13 @@ golang_packages:
 
 windows_packages:
   - microsoft-windows-terminal
+
+powershell_packages:
+  - psscriptanalyzer
+  - pester
+  - invoke-build
+  # - az.powershell
+
+win_features:
+  - Microsoft-Windows-Subsystem-Linux
+  - VirtualMachinePlatform

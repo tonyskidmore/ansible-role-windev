@@ -49,3 +49,11 @@
   loop: "{{ wsl_packages }}"
   when:
     - wsl_packages | length
+
+- name: PowerShell module packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ powershell_packages }}"
+  when:
+    - powershell_packages | length
