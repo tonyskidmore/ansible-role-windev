@@ -43,6 +43,10 @@
     elements:
       - 'C:\Program Files (x86)\pipx_bin'
 
+- name: Reboot after pipx install for system path
+  win_reboot:
+  when: pip_pipx is changed
+
 - name: Pipx install pre-commit
   win_command: "pipx install pre-commit"
   register: pipx_pre_commit
