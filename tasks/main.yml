@@ -11,6 +11,11 @@
   debug:
     var: git_install
 
+- name: Reboot after first chocolatey install
+  win_reboot:
+  when:
+    - git_install.warnings si search("was installed during this task")
+
 - name: Install terraform
   win_chocolatey:
     name: terraform
