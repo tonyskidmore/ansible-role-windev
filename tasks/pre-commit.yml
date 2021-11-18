@@ -27,7 +27,7 @@
 - name: Install pipx package
   win_command: "python -m pip install pipx"
   args:
-    creates: "C:\Python310\Scripts\pipx.exe"
+    creates: 'C:\Python310\Scripts\pipx.exe'
   register: pip_pipx
   environment:
     PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
