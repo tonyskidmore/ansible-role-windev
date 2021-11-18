@@ -9,13 +9,15 @@ terraform_packages:
 azure_packages:
   - azure-cli
 
-wsl_packages:
+wsl_base_packages:
   - wsl2
+
+wsl_packages:
   - wsl-ubuntu-2004
 
 # Python 3 not working correctly?
-python_packages: []
-#  - python3
+python_packages:
+  - python3
 
 golang_packages:
   - golang
@@ -39,3 +41,4 @@ vscode_packages:
   - vscode
 
 install_pre_commit: no
+install_wsl: yes

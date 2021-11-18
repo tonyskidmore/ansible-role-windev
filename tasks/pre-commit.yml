@@ -8,12 +8,12 @@
 #     - pip
 #     - setuptools
 
-# - name: Update Python pip
-#   win_command: "python3 -m pip install --upgrade pip"
+- name: Update Python pip
+  win_command: "python -m pip install --upgrade pip"
 
 
-# - name: Update Python setuptools
-#   win_command: "python3 -m pip install --upgrade setuptools"
+- name: Update Python setuptools
+  win_command: "python -m pip install --upgrade setuptools"
 
 # - name: Install pipx
 #   pip:
@@ -25,7 +25,7 @@
 #     PIPX_HOME = "${env:ProgramFiles(x86)}\pipx"
 
 - name: Update Python package manager components
-  win_command: "python3 -m pip install pipx"
+  win_command: "python -m pip install pipx"
   register: pip_pipx
   environment:
     PIPX_BIN_DIR = "${env:ProgramFiles(x86)}\pipx_bin"
@@ -35,13 +35,11 @@
   debug:
     var: pip_pipx
 
+  # Add to system path
 - name: Pipx ensure path
-  win_command: "pipx ensurepath"
-  register: pipx_ensurepath
-
-- name: Debug pipx_ensurepath
-  debug:
-    var: pipx_ensurepath
+  win_path:
+  elements:
+    - "C:\Program Files (x86)}\pipx_bin"
 
 - name: Pipx install pre-commit
   win_command: "pipx install pre-commit"
