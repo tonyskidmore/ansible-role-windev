@@ -19,9 +19,9 @@
 
 - name: Install terraform packages
   win_chocolatey:
-    name: "{{ item }}"
+    name: "{{ terraform_packages }}"
     state: present
-  loop: "{{ terraform_packages }}"
+  # loop: "{{ terraform_packages }}"
   when:
     - terraform_packages | length
 
