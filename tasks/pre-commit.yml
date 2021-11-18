@@ -8,12 +8,12 @@
 #     - pip
 #     - setuptools
 
-- name: Update Python pip
-  win_command: "python3 -m pip install --upgrade pip"
+# - name: Update Python pip
+#   win_command: "python3 -m pip install --upgrade pip"
 
 
-- name: Update Python setuptools
-  win_command: "python3 -m pip install --upgrade setuptools"
+# - name: Update Python setuptools
+#   win_command: "python3 -m pip install --upgrade setuptools"
 
 # - name: Install pipx
 #   pip:
