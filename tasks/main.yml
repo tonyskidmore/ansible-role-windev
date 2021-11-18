@@ -25,18 +25,18 @@
   when:
     - terraform_packages | length
 
-- name: Install azure packages
-  win_chocolatey: azure_packages
-    name: "{{ item }}"
-    state: present
-  loop: "{{ azure_packages }}"
-  when:
-    - azure_packages | length
+# - name: Install azure packages
+#   win_chocolatey: azure_packages
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ azure_packages }}"
+#   when:
+#     - azure_packages | length
 
-- name: Install windows packages
-  win_chocolatey: windows_packages
-    name: "{{ item }}"
-    state: present
-  loop: "{{ windows_packages }}"
-  when:
-    - windows_packages | length
+# - name: Install windows packages
+#   win_chocolatey: windows_packages
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ windows_packages }}"
+#   when:
+#     - windows_packages | length
