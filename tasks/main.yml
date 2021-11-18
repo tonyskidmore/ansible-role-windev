@@ -14,7 +14,8 @@
 - name: Reboot after first chocolatey install
   win_reboot:
   when:
-    - git_install.warnings si search("was installed during this task")
+    - git_install.warnings is defined
+    - git_install.warnings is search("was installed during this task")
 
 - name: Install terraform
   win_chocolatey:
