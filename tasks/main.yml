@@ -35,7 +35,7 @@
     - azure_packages | length
 
 - name: Install windows packages
-  win_chocolatey:
+  win_package:
     name: "{{ item }}"
     state: present
   loop: "{{ windows_packages }}"
