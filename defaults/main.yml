@@ -33,3 +33,7 @@ powershell_packages:
 win_features:
   - Microsoft-Windows-Subsystem-Linux
   - VirtualMachinePlatform
+
+vscode_packages:
+  - vscode
+  

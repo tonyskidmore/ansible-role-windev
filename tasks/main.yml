@@ -42,6 +42,17 @@
   when:
     - windows_packages | length
 
+- name: Install Python packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ python_packages }}"
+  when:
+    - python_packages | length
+
+- name: Reboot before WSL install
+  win_reboot:
+
 - name: Install Windows Subsystem for Linux (WSL) packages
   win_chocolatey:
     name: "{{ item }}"
@@ -57,3 +68,11 @@
   loop: "{{ powershell_packages }}"
   when:
     - powershell_packages | length
+
+- name: Visual Studio Code packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ vscode_packages }}"
+  when:
+    - vscode_packages | length

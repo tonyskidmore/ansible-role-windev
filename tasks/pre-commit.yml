@@ -1,0 +1,17 @@
+---
+
+- name: Update Python package manager components
+  pip:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - pip
+    - setuptools
+
+- name: Install pipx
+  pip:
+    name: pipx
+    state: present
+  environment:
+    PIPX_BIN_DIR = "${env:ProgramFiles(x86)}\pipx_bin"
+    PIPX_HOME = "${env:ProgramFiles(x86)}\pipx"
