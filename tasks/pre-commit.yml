@@ -28,8 +28,8 @@
   win_command: "python -m pip install pipx"
   register: pip_pipx
   environment:
-    PIPX_BIN_DIR = 'C:\Program Files (x86)\pipx_bin'
-    PIPX_HOME = 'C:\Program Files (x86)\pipx'
+    PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
+    PIPX_HOME: 'C:\Program Files (x86)\pipx'
 
 - name: Debug pip_pipx
   debug:

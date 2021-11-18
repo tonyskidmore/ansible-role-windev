@@ -56,33 +56,33 @@
   win_reboot:
   when: python_result is changed
 
-- name: Install Windows Subsystem for Linux (WSL) base packages
-  win_chocolatey:
-    name: "{{ item }}"
-    state: present
-  register: wsl_base
-  loop: "{{ wsl_base_packages }}"
-  when:
-    - install_wsl
-    - wsl_base_packages | length
+# - name: Install Windows Subsystem for Linux (WSL) base packages
+#   win_chocolatey:
+#     name: "{{ item }}"
+#     state: present
+#   register: wsl_base
+#   loop: "{{ wsl_base_packages }}"
+#   when:
+#     - install_wsl
+#     - wsl_base_packages | length
 
-- name: Debug wsl_base
-  debug:
-    var: wsl_base
+# - name: Debug wsl_base
+#   debug:
+#     var: wsl_base
 
-- name: Reboot after WSL base install
-  win_reboot:
-  when: wsl_base is changed
+# - name: Reboot after WSL base install
+#   win_reboot:
+#   when: wsl_base is changed
 
-- name: Install Windows Subsystem for Linux (WSL) packages
-  win_chocolatey:
-    name: "{{ item }}"
-    state: present
-  register: wsl
-  loop: "{{ wsl_base_packages }}"
-  when:
-    - install_wsl
-    - wsl_packages | length
+# - name: Install Windows Subsystem for Linux (WSL) packages
+#   win_chocolatey:
+#     name: "{{ item }}"
+#     state: present
+#   register: wsl
+#   loop: "{{ wsl_base_packages }}"
+#   when:
+#     - install_wsl
+#     - wsl_packages | length
 
 - name: PowerShell module packages
   win_chocolatey:
@@ -105,3 +105,9 @@
     file: pre-commit.yml
   when:
     - install_pre_commit
+
+- name: Install Windows Subsystem for Linux (WSL)
+  include_tasks:
+    file: wsl.yml
+  when:
+    - install_wsl
