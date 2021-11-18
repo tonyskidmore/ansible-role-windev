@@ -24,7 +24,7 @@
 #     PIPX_BIN_DIR = "${env:ProgramFiles(x86)}\pipx_bin"
 #     PIPX_HOME = "${env:ProgramFiles(x86)}\pipx"
 
-- name: Update Python package manager components
+- name: Install pipx package
   win_command: "python -m pip install pipx"
   register: pip_pipx
   environment:
