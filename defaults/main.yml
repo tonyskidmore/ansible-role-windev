@@ -13,8 +13,9 @@ wsl_packages:
   - wsl2
   - wsl-ubuntu-2004
 
-python_packages:
-  - python3
+# Python 3 not working correctly?
+python_packages: []
+#  - python3
 
 golang_packages:
   - golang
