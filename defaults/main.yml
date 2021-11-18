@@ -24,6 +24,7 @@ windows_packages:
   - microsoft-windows-terminal
 
 powershell_packages:
+  - powershell-core
   - psscriptanalyzer
   - pester
   - invoke-build
