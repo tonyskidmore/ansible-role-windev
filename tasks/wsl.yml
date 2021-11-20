@@ -31,9 +31,9 @@
   block:
 
     - name: Create user
-      win_command: powershell.exe -
-      args:
-        stdin: Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
+      ansible.windows.win_powershell:
+      script: |
+        Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
 
   when:
     - configure_wsl
