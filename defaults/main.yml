@@ -23,8 +23,9 @@ golang_packages:
   - golang
   - dep
 
-windows_packages: []
-  # - microsoft-windows-terminal
+windows_packages:
+  # windows terminal package fails
+  - microsoft-windows-terminal
 
 powershell_packages:
   - powershell-core
@@ -42,4 +43,5 @@ vscode_packages:
 
 install_pre_commit: yes
 install_wsl: yes
+install_windows_packages: no
 configure_wsl: yes
