@@ -30,7 +30,7 @@
   block:
 
     - name: Create user
-      win_command: powrshell.exe -
+      win_command: powershell.exe -
       args:
         stdin: Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
 
