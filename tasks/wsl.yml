@@ -16,9 +16,9 @@
   block:
 
     - name: Create user
-      win_powershell:
-        script: |
-          Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
+      win_command: powrshell.exe -
+      args:
+        stdin: Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
 
   when:
     - configure_wsl
