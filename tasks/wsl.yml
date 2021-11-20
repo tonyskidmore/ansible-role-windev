@@ -5,8 +5,18 @@
     var: ansible_facts
 
 - name: Install Windows Subsystem for Linux (wsl2)
+  win_command: wsl --status
+  register: wsl_status
+  ignore_errors: yes
+
+- debug:
+    var: wsl_status
+
+- name: Install Windows Subsystem for Linux (wsl2)
   win_command: wsl --install
   register: wsl_install
+  when:
+    - wsl_status is 
 
 - name: Debug WSL install status
   debug:
