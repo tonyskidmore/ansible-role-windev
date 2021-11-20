@@ -23,8 +23,8 @@ golang_packages:
   - golang
   - dep
 
-windows_packages:
-  - microsoft-windows-terminal
+windows_packages: []
+  # - microsoft-windows-terminal
 
 powershell_packages:
   - powershell-core
