@@ -92,4 +92,8 @@
   when:
     - install_pre_commit
 
-
+- name: Configure Windows Subsystem for Linux (WSL)
+  include_tasks:
+    file: wsl_config.yml
+  when:
+    - configure_wsl

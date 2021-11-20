@@ -27,17 +27,6 @@
   debug:
     var: wsl_install
 
-- name: Configure WSL
-  block:
-
-    - name: Create user
-      ansible.windows.win_powershell:
-      script: |
-        Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
-      register: wsl_config_script
-
-    - debug:
-        var: wsl_config_script
-
-  when:
-    - configure_wsl
+- name: Reboot after WSL installation
+  win_reboot:
+  when: wsl_install is changed
