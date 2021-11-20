@@ -8,6 +8,7 @@
   win_command: wsl --status
   register: wsl_status
   ignore_errors: yes
+  changed_when: no
 
 - name: Debug WSL install status
   debug:
