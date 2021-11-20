@@ -24,6 +24,15 @@
 #     PIPX_BIN_DIR = "${env:ProgramFiles(x86)}\pipx_bin"
 #     PIPX_HOME = "${env:ProgramFiles(x86)}\pipx"
 
+- name: Get pipx version
+  win_command: "pipx --version"
+  ignore_errors: yes
+  register: pipx_version
+
+- name: Debug pip_pipx
+  debug:
+    var: pip_pipx
+
 - name: Install pipx package
   win_command: "python -m pip install pipx"
   args:
@@ -32,6 +41,8 @@
   environment:
     PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
     PIPX_HOME: 'C:\Program Files (x86)\pipx'
+  when:
+    - pipx_version is failed
 
 - name: Debug pip_pipx
   debug:
@@ -42,6 +53,8 @@
   win_path:
     elements:
       - 'C:\Program Files (x86)\pipx_bin'
+  when:
+    - pipx_version is failed
 
 - name: Reboot after pipx install for system path
   win_reboot:
@@ -50,6 +63,7 @@
 - name: Pipx install pre-commit
   win_command: "pipx install pre-commit"
   register: pipx_pre_commit
+  when: pip_pipx is changed
 
 - name: Debug pipx_pre_commit
   debug:
