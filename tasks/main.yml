@@ -2,6 +2,11 @@
 
 - name: Get user context
   win_whoami:
+  register: win_whoami
+
+- name: Debug win_whoami
+  debug:
+    var: win_whoami
 
 - name: Install Windows Subsystem for Linux (WSL)
   include_tasks:

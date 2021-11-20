@@ -8,6 +8,6 @@
   win_command: wsl --install
   register: wsl_install
 
-- name: Debug wsl_install
+- name: Debug WSL install status
   debug:
-    var: wsl_install
+    var: wsl_install.failed
