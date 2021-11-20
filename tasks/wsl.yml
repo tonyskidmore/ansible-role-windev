@@ -34,6 +34,7 @@
       ansible.windows.win_powershell:
       script: |
         Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m tony"
+      register
 
   when:
     - configure_wsl
