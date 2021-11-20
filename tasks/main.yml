@@ -1,5 +1,11 @@
 ---
 
+- name: Install Windows Subsystem for Linux (WSL)
+  include_tasks:
+    file: wsl.yml
+  when:
+    - install_wsl
+
   # will always need git and will trigger Chocolatey install
 - name: Install git
   win_chocolatey:
@@ -106,8 +112,4 @@
   when:
     - install_pre_commit
 
-- name: Install Windows Subsystem for Linux (WSL)
-  include_tasks:
-    file: wsl.yml
-  when:
-    - install_wsl
+
