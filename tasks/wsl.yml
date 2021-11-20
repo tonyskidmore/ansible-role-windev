@@ -9,8 +9,12 @@
   register: wsl_status
   ignore_errors: yes
 
-- debug:
+- name: Debug WSL install status
+  debug:
     var: wsl_status
+
+- debug:
+    msg: "{{ wsl_status.stdout | to_yaml }}"
 
 - name: Install Windows Subsystem for Linux (wsl2)
   win_command: wsl --install
@@ -20,7 +24,7 @@
 
 - name: Debug WSL install status
   debug:
-    msg: "{{ wsl_install.failed | to_yaml }}"
+    var: wsl_install
 
 - name: Configure WSL
   block:
