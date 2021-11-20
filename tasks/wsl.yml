@@ -16,11 +16,11 @@
   win_command: wsl --install
   register: wsl_install
   when:
-    - wsl_status is 
+    - wsl_status is failed
 
 - name: Debug WSL install status
   debug:
-    var: wsl_install.failed
+    msg: "{{ wsl_install.failed | to_yaml }}"
 
 - name: Configure WSL
   block:
