@@ -11,7 +11,6 @@
 - name: Update Python pip
   win_command: "python -m pip install --upgrade pip"
 
-
 - name: Update Python setuptools
   win_command: "python -m pip install --upgrade setuptools"
 
@@ -26,12 +25,13 @@
 
 - name: Get pipx version
   win_command: "pipx --version"
+  change_when: no
   ignore_errors: yes
   register: pipx_version
 
-- name: Debug pip_pipx
+- name: Debug pipx_version
   debug:
-    var: pip_pipx
+    var: pipx_version
 
 - name: Install pipx package
   win_command: set
