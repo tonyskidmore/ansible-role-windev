@@ -2,7 +2,7 @@
 
 - name: Set repo clone destination path
   set_fact:
-    git_clone_path: "{{ ansible_facts.env.HOMEPATH }}/Documents/GitHub"
+    git_clone_path: "{{ ansible_facts.user_dir }}\\Documents\\GitHub"
 
 - name: Create git repo path
   ansible.windows.win_file:
