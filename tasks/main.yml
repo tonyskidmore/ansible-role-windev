@@ -8,15 +8,6 @@
   debug:
     var: win_whoami
 
-- name: Install windows packages
-  win_chocolatey:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ windows_packages }}"
-  when:
-    - install_windows_packages
-    - windows_packages | length
-
 - name: Install Windows Subsystem for Linux (WSL)
   include_tasks:
     file: wsl.yml
@@ -56,8 +47,6 @@
   loop: "{{ azure_packages }}"
   when:
     - azure_packages | length
-
-
 
 - name: Install Python packages
   win_chocolatey:
@@ -104,3 +93,12 @@
     file: wsl_config.yml
   when:
     - configure_wsl
+
+- name: Install windows packages
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ windows_packages }}"
+  when:
+    - install_windows_packages
+    - windows_packages | length
