@@ -25,7 +25,7 @@
 
 - name: Get pipx version
   win_command: "pipx --version"
-  change_when: no
+  changed_when: no
   ignore_errors: yes
   register: pipx_version
 
