@@ -106,15 +106,15 @@
       debug:
         var: wsl_unzip
 
-    - name: Run wsl import
-      win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
-      register: wsl_import
-      # when:
-      #   - wsl_status is failed
+    # - name: Run wsl import
+    #   win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
+    #   register: wsl_import
+    #   # when:
+    #   #   - wsl_status is failed
 
-    - name: Debug wsl_import
-      debug:
-        var: wsl_import
+    # - name: Debug wsl_import
+    #   debug:
+    #     var: wsl_import
 
   # always:
 
