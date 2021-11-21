@@ -35,9 +35,10 @@
 #   when: wsl_install is changed
 
 - name: Enable WSL Windows features
-  ansible.windows.win_feature:
+  ansible.windows.win_optional_feature:
     name: "{{ item }}"
     state: present
+
   register: win_feature
   loop: "{{ win_features }}"
 
