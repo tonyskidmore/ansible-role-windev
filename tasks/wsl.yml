@@ -37,7 +37,7 @@
 - name: Enable WSL Windows features
   ansible.windows.win_feature:
     name: "{{ item }}"
-    state: present:
+    state: present
   register: win_feature
   loop: "{{ win_features }}"
 
