@@ -33,15 +33,35 @@
   debug:
     var: pipx_version
 
+- name: Set pipx envronment
+  ansible.windows.win_environment
+    level: machine
+    variables:
+      PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
+      PIPX_HOME: 'C:\Program Files (x86)\pipx'    
+  register: set_pipex_vars
+
+- name: Debug set_pipex_vars
+  debug:
+    var: set_pipex_vars
+
+- name: Gather facts
+  win_setup:
+  register: win_setup
+
+- name: Debug win_setup
+  debug:
+    var: win_setup
+
 - name: Install pipx package
-  win_shell: "echo %PIPX_BIN_DIR%"
+  win_shell: echo %PIPX_BIN_DIR%
   # win_command: "python -m pip install pipx"
   # args:
   #   creates: 'C:\Python310\Scripts\pipx.exe'
   register: pip_pipx
-  environment:
-    PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
-    PIPX_HOME: 'C:\Program Files (x86)\pipx'
+  # environment:
+  #   PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
+  #   PIPX_HOME: 'C:\Program Files (x86)\pipx'
   # when:
   #   - pipx_version is failed
 
