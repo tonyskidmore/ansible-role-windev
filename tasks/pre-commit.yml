@@ -41,6 +41,18 @@
       PIPX_HOME: 'C:\Program Files (x86)\pipx'    
   register: set_pipex_vars
 
+  # Add to system path
+- name: Pipx ensure path
+  win_path:
+    elements:
+      - 'C:\Program Files (x86)\pipx_bin'
+  when:
+    - pipx_version is failed
+
+- name: Reboot after pipx install for system path
+  win_reboot:
+  when: pip_pipx is changed
+
 - name: Debug set_pipex_vars
   debug:
     var: set_pipex_vars
@@ -54,37 +66,31 @@
     var: win_setup
 
 - name: Install pipx package
-  win_shell: echo %PIPX_BIN_DIR%
-  # win_command: "python -m pip install pipx"
-  # args:
-  #   creates: 'C:\Python310\Scripts\pipx.exe'
+  win_command: "python -m pip install pipx"
+  args:
+    creates: 'C:\Python310\Scripts\pipx.exe'
   register: pip_pipx
   # environment:
   #   PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
   #   PIPX_HOME: 'C:\Program Files (x86)\pipx'
-  # when:
-  #   - pipx_version is failed
+  when:
+    - pipx_version is failed
 
 - name: Debug pip_pipx
   debug:
     var: pip_pipx
 
-  # Add to system path
-- name: Pipx ensure path
-  win_path:
-    elements:
-      - 'C:\Program Files (x86)\pipx_bin'
-  when:
-    - pipx_version is failed
-
-- name: Reboot after pipx install for system path
-  win_reboot:
-  when: pip_pipx is changed
+- name: Get pre-commit version
+  win_command: "pre-commit --version"
+  changed_when: no
+  ignore_errors: yes
+  register: precommit_version
 
 - name: Pipx install pre-commit
   win_command: "pipx install pre-commit"
   register: pipx_pre_commit
-  when: pip_pipx is changed
+  when:
+    - precommit_version is failed
 
 - name: Debug pipx_pre_commit
   debug:
