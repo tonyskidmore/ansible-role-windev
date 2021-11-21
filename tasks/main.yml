@@ -95,7 +95,7 @@
   when:
     - install_pre_commit
 
-- name: Clone got repos
+- name: Clone git repos
   include_tasks:
     file: git_repos.yml
 
