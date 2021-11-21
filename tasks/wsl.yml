@@ -95,11 +95,11 @@
       debug:
         var: wsl_set_v2
 
-  - name: Unzip ubuntu file
-    community.windows.win_unzip:
-      src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
-      dest: "{{ wsl_ubuntu_dir.path }}"
-      creates: "{{ wsl_ubuntu_dir.path }}"
+    - name: Unzip ubuntu file
+      community.windows.win_unzip:
+        src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
+        dest: "{{ wsl_ubuntu_dir.path }}"
+        creates: "{{ wsl_ubuntu_dir.path }}"
 
     - name: Run wsl import
       win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\install.tar.gz"
