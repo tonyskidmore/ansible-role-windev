@@ -44,4 +44,4 @@ vscode_packages:
 install_pre_commit: yes
 install_wsl: yes
 install_windows_packages: no
-configure_wsl: yes
+configure_wsl: no

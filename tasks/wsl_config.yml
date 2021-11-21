@@ -3,7 +3,10 @@
 - name: Create user
   ansible.windows.win_powershell:
     script: |
-      Start-Process "ubuntu.exe" -NoNewWindow -ArgumentList "useradd -m adminuser"
+      wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
+      wsl -d ubuntu -u root bash -ic "useradd -m adminuser"
+      wsl -d ubuntu -u root bash -ic "passwd -d adminuser"
+      wsl -t ubuntu
   register: wsl_config_script
 
 # - name: Set default user
