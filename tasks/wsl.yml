@@ -98,8 +98,8 @@
     - name: Unzip ubuntu file
       community.windows.win_unzip:
         src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
-        dest: "{{ wsl_ubuntu_dir.path }}"
-        creates: "{{ wsl_ubuntu_dir.path }}"
+        dest: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
+        creates: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
       register: wsl_unzip
 
     - name: Debug wsl_unzip
@@ -107,7 +107,7 @@
         var: wsl_unzip
 
     - name: Run wsl import
-      win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\install.tar.gz"
+      win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
       register: wsl_import
       # when:
       #   - wsl_status is failed
