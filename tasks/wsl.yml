@@ -53,17 +53,28 @@
 - name: WSL download block
   block:
 
-    - name: Create temporary directory
+    - name: Create wsl temporary directory
       ansible.windows.win_tempfile:
         state: directory
         suffix: wsl
       register: wsl_download_dir
 
-    - name: Download earthrise.jpg to specified path
+    - name: Create ubuntu temporary directory
+      ansible.windows.win_tempfile:
+        state: directory
+        suffix: wsl_ubuntu
+      register: wsl_ubuntu_dir
+
+    - name: Download WSL Update
       ansible.windows.win_get_url:
         url: https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
         dest: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
   
+    - name: Download Ubuntu 20.04
+      ansible.windows.win_get_url:
+        url: https://aka.ms/wslubuntu2004
+        dest: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
+
     - name: Run wsl_update_x64.msi installer
       ansible.windows.win_package:
         path: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
@@ -74,7 +85,7 @@
       debug:
         var: wsl_update_x64
 
-    - name: Install Windows Subsystem for Linux (wsl2)
+    - name: Set Windows Subsystem for Linux version 2 (wsl2)
       win_command: wsl --set-default-version 2
       register: wsl_set_v2
       when:
@@ -83,6 +94,22 @@
     - name: Debug wsl_set_v2
       debug:
         var: wsl_set_v2
+
+  - name: Unzip ubuntu file
+    community.windows.win_unzip:
+      src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
+      dest: "{{ wsl_ubuntu_dir.path }}"
+      creates: "{{ wsl_ubuntu_dir.path }}"
+
+    - name: Run wsl import
+      win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\install.tar.gz"
+      register: wsl_import
+      # when:
+      #   - wsl_status is failed
+
+    - name: Debug wsl_import
+      debug:
+        var: wsl_import
 
   always:
 
