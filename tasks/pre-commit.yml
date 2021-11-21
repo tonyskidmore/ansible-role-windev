@@ -49,13 +49,13 @@
   when:
     - pipx_version is failed
 
-- name: Reboot after pipx install for system path
-  win_reboot:
-  when: pip_pipx is changed
-
 - name: Debug set_pipex_vars
   debug:
     var: set_pipex_vars
+
+- name: Reboot after pipx install for system path
+  win_reboot:
+  when: set_pipex_vars is changed
 
 - name: Gather facts
   setup:
