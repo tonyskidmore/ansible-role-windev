@@ -1,6 +1,6 @@
 ---
 
-- name: Create user
+- name: Configure WSL
   ansible.windows.win_powershell:
     script: |
       wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
