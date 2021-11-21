@@ -49,6 +49,7 @@
 #   ansible.windows.win_reboot:
 #   when: win_feature.reboot_required
 
+# re: https://github.com/kaisalmen/wsltooling
 - name: WSL download block
   block:
 
@@ -72,6 +73,16 @@
     - name: Debug wsl_update_x64
       debug:
         var: wsl_update_x64
+
+    - name: Install Windows Subsystem for Linux (wsl2)
+      win_command: wsl --set-default-version 2
+      register: wsl_set_v2
+      when:
+        - wsl_status is failed
+
+    - name: Debug wsl_set_v2
+      debug:
+        var: wsl_set_v2
 
   always:
 
