@@ -34,7 +34,7 @@
     var: pipx_version
 
 - name: Install pipx package
-  win_shell: set
+  win_shell: "echo %PIPX_BIN_DIR%"
   # win_command: "python -m pip install pipx"
   # args:
   #   creates: 'C:\Python310\Scripts\pipx.exe'
