@@ -5,10 +5,9 @@
     git_clone_path: "{{ ansible_facts.env.HOMEPATH }}/Documents/GitHub"
 
 - name: Create git repo path
-  ansible.windows_win_file:
+  ansible.windows.win_file:
     path: "{{ git_clone_path }}"
     state: directory
 
 - name: Clone git repo
   ansible.windows_win_command: "git clone https://github.com/tonyskidmore/terraform-azurerm-vmss-linux.git {{ git_clone_path }}"
-  
