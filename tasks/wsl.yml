@@ -38,13 +38,16 @@
   ansible.windows.win_optional_feature:
     name: "{{ item }}"
     state: present
-
   register: win_feature
   loop: "{{ win_features }}"
 
-- name: Reboot if WSL feature installation requires it
-  ansible.windows.win_reboot:
-  when: win_feature.reboot_required
+- name: Debug win_feature
+  debug:
+    var: win_feature
+
+# - name: Reboot if WSL feature installation requires it
+#   ansible.windows.win_reboot:
+#   when: win_feature.reboot_required
 
 # - name: WSL download block
 #   block:
