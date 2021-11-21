@@ -46,7 +46,7 @@
     var: set_pipex_vars
 
 - name: Gather facts
-  win_setup:
+  setup:
   register: win_setup
 
 - name: Debug win_setup
