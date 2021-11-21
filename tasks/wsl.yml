@@ -64,7 +64,7 @@
         dest: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
   
     - name: Run wsl_update_x64.msi installer
-      ansible.windows.command: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi /quiet"
+      ansible.windows.win_command: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi /quiet"
       register: wsl_update_x64
 
     - name: Debug wsl_update_x64
