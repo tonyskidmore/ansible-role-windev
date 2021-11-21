@@ -106,6 +106,7 @@
       debug:
         var: wsl_unzip
 
+    # worked when ran locally
     # - name: Run wsl import
     #   win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
     #   register: wsl_import
