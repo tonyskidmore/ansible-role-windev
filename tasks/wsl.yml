@@ -111,9 +111,9 @@
       debug:
         var: wsl_import
 
-  always:
+  # always:
 
-    - name: Remove temp download directory
-      ansible.windows.win_file:
-        path: "{{ wsl_download_dir.path }}"
-        state: absent
+  #   - name: Remove temp download directory
+  #     ansible.windows.win_file:
+  #       path: "{{ wsl_download_dir.path }}"
+  #       state: absent
