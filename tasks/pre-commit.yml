@@ -42,8 +42,8 @@
   environment:
     PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
     PIPX_HOME: 'C:\Program Files (x86)\pipx'
-  when:
-    - pipx_version is failed
+  # when:
+  #   - pipx_version is failed
 
 - name: Debug pip_pipx
   debug:
