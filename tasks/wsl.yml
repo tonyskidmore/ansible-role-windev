@@ -88,8 +88,8 @@
     - name: Set Windows Subsystem for Linux version 2 (wsl2)
       win_command: wsl --set-default-version 2
       register: wsl_set_v2
-      when:
-        - wsl_status is failed
+      # when:
+      #   - wsl_status is failed
 
     - name: Debug wsl_set_v2
       debug:
@@ -100,6 +100,11 @@
         src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
         dest: "{{ wsl_ubuntu_dir.path }}"
         creates: "{{ wsl_ubuntu_dir.path }}"
+      register: wsl_unzip
+
+    - name: Debug wsl_unzip
+      debug:
+        var: wsl_unzip
 
     - name: Run wsl import
       win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\install.tar.gz"
