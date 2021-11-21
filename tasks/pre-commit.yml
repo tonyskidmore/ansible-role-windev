@@ -34,7 +34,7 @@
     var: pipx_version
 
 - name: Set pipx envronment
-  ansible.windows.win_environment
+  ansible.windows.win_environment:
     level: machine
     variables:
       PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
