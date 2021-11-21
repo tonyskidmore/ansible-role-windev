@@ -12,4 +12,4 @@
 - name: Clone git repo
   ansible.windows.win_command: "git clone https://github.com/tonyskidmore/terraform-azurerm-vmss-linux.git {{ git_clone_path }}"
   args:
-    creates: "{{ git_clone_path }}"
+    creates: "{{ git_clone_path }}\\.git"
