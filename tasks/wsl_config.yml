@@ -6,6 +6,8 @@
       wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
       wsl -d ubuntu -u root bash -ic "useradd -m adminuser"
       wsl -d ubuntu -u root bash -ic "passwd -d adminuser"
+      wsl -d ubuntu -u root bash -ic "echo '%adminuser ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/adminuser"
+      ubuntu config --default-user adminuser
       wsl -t ubuntu
   register: wsl_config_script
 
