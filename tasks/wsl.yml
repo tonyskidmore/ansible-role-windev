@@ -49,7 +49,31 @@
 #   ansible.windows.win_reboot:
 #   when: win_feature.reboot_required
 
-# - name: WSL download block
-#   block:
+- name: WSL download block
+  block:
 
-#   always:
+    - name: Create temporary directory
+      ansible.windows.win_tempfile:
+        state: directory
+        suffix: wsl
+      register: wsl_download_dir
+
+    - name: Download earthrise.jpg to specified path
+      ansible.windows.win_get_url:
+        url: https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
+        dest: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
+  
+    - name: Run wsl_update_x64.msi installer
+      ansible.windows.command: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi /quiet"
+      register: wsl_update_x64
+
+    - name: Debug wsl_update_x64
+      debug:
+        var: wsl_update_x64
+
+  always:
+
+    - name: Remove temp download directory
+      ansible.windows.win_file:
+        path: "{{ wsl_download_dir.path }}"
+        state: absent
