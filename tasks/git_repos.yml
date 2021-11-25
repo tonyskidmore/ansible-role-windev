@@ -10,7 +10,7 @@
     state: directory
 
 - name: Clone git repo
-  ansible.windows.win_command: "git clone https://https://github.com/tonyskidmore/terraform-azurerm-resourcegroup.git {{ git_clone_path }}"
+  ansible.windows.win_command: "git clone https://github.com/tonyskidmore/terraform-azurerm-resourcegroup.git {{ git_clone_path }}"
   args:
     creates: "{{ git_clone_path }}\\.git"
 
