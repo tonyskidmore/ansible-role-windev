@@ -7,6 +7,7 @@
 - name: Debug win_whoami
   debug:
     var: win_whoami
+    verbosity: "{{ verbosity_level }}"
 
 - name: Install Windows Subsystem for Linux (WSL)
   include_tasks:
@@ -24,6 +25,7 @@
 - name: debug git_install
   debug:
     var: git_install
+    verbosity: "{{ verbosity_level }}"
 
 - name: Reboot after first chocolatey install
   win_reboot:

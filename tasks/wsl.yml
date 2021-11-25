@@ -3,6 +3,7 @@
 - name: Debug ansible_facts
   debug:
     var: ansible_facts
+    verbosity: "{{ verbosity_level }}"
 
 - name: Install Windows Subsystem for Linux (wsl2)
   win_command: wsl --status
@@ -13,9 +14,11 @@
 - name: Debug WSL install status
   debug:
     var: wsl_status
+    verbosity: "{{ verbosity_level }}"
 
 - debug:
     msg: "{{ wsl_status.stdout | to_yaml }}"
+    verbosity: "{{ verbosity_level }}"
 
 # all-in-one method
 # Install WSL with a single command now available in Windows 10 version 2004 and higher
@@ -29,6 +32,7 @@
 - name: Debug WSL install status
   debug:
     var: wsl_install
+    verbosity: "{{ verbosity_level }}"
 
 - name: Reboot after WSL installation
   win_reboot:

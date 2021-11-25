@@ -16,4 +16,4 @@
 
 - debug:
     var: wsl_config_script
-
+    verbosity: "{{ verbosity_level }}"

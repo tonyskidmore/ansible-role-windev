@@ -32,6 +32,7 @@
 - name: Debug pipx_version
   debug:
     var: pipx_version
+    verbosity: "{{ verbosity_level }}"
 
 - name: Set pipx envronment
   ansible.windows.win_environment:
@@ -52,6 +53,7 @@
 - name: Debug set_pipex_vars
   debug:
     var: set_pipex_vars
+    verbosity: "{{ verbosity_level }}"
 
 - name: Reboot after pipx install for system path
   win_reboot:
@@ -64,6 +66,7 @@
 - name: Debug win_setup
   debug:
     var: win_setup
+    verbosity: "{{ verbosity_level }}"
 
 - name: Install pipx package
   win_command: "python -m pip install pipx"
@@ -79,6 +82,7 @@
 - name: Debug pip_pipx
   debug:
     var: pip_pipx
+    verbosity: "{{ verbosity_level }}"
 
 - name: Get pre-commit version
   win_command: "pre-commit --version"
@@ -94,4 +98,5 @@
 
 - name: Debug pipx_pre_commit
   debug:
-    var: pipx_pre_commit 
+    var: pipx_pre_commit
+    verbosity: "{{ verbosity_level }}"
