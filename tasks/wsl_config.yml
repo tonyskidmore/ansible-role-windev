@@ -12,7 +12,7 @@
   register: wsl_config_script
 
 # - name: Set default user
-#   win_command: 
+#   win_command:
 
 - debug:
     var: wsl_config_script
