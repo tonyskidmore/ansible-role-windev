@@ -53,7 +53,9 @@
 
 - name: Reboot if WSL feature installation requires it
   ansible.windows.win_reboot:
-  when: win_feature.reboot_required
+  when:
+    - win_feature.reboot_required is defined
+    - win_feature.reboot_required
 
 # re: https://github.com/kaisalmen/wsltooling
 - name: WSL download block
