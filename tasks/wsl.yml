@@ -90,6 +90,19 @@
       become_user: "{{ ansible_user }}"
       register: whoami
 
+    - name: turn UAC off
+      win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system
+        name: EnableLUA
+        data: 0
+        type: dword
+        state: present
+      register: uac_result
+
+    - name: reboot after disabling UAC
+      win_reboot:
+      when: uac_result is changed
+
     - name: Debug whoami
       debug:
         var: whoami
