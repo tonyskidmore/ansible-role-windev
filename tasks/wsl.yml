@@ -87,6 +87,7 @@
       ansible.windows.win_whoami:
       become: yes
       become_method: runas
+      become_user: "{{ ansible_user }}"
 
     - name: Run wsl_update_x64.msi installer
       ansible.windows.win_package:
@@ -95,6 +96,7 @@
       register: wsl_update_x64
       become: yes
       become_method: runas
+      become_user: "{{ ansible_user }}"
 
     - name: Debug wsl_update_x64
       debug:
