@@ -99,9 +99,9 @@
         path: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
         state: present
       register: wsl_update_x64
-      become: yes
-      become_method: runas
-      become_user: "System"
+      # become: yes
+      # become_method: runas
+      # become_user: "System"
 
     - name: Debug wsl_update_x64
       debug:
