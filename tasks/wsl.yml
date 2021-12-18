@@ -23,39 +23,46 @@
 # all-in-one method
 # Install WSL with a single command now available in Windows 10 version 2004 and higher
 # https://devblogs.microsoft.com/commandline/install-wsl-with-a-single-command-now-available-in-windows-10-version-2004-and-higher/
-# - name: Install Windows Subsystem for Linux (wsl2)
-#   win_command: wsl --install
-#   register: wsl_install
-#   when:
-#     - wsl_status is failed
+- name: Use wsl --install
+  block:
+    - name: Install Windows Subsystem for Linux (wsl2) - wsl --install
+      win_command: wsl --install
+      register: wsl_install
+      when:
+        - wsl_status is failed
 
-# - name: Debug WSL install status
-#   debug:
-#     var: wsl_install
-#     verbosity: "{{ verbosity_level }}"
+    - name: Debug WSL install status
+      debug:
+        var: wsl_install
+        verbosity: "{{ verbosity_level }}"
 
-# - name: Reboot after WSL installation
-#   win_reboot:
-#   when: wsl_install is changed
+    - name: Reboot after WSL installation
+      win_reboot:
+      when: wsl_install is changed
 
-
-
-- name: Enable WSL Windows features
-  ansible.windows.win_optional_feature:
-    name: "{{ item }}"
-    state: present
-  register: win_feature
-  loop: "{{ win_features }}"
-
-- name: Debug win_feature
-  debug:
-    var: win_feature
-
-- name: Reboot if WSL feature installation requires it
-  ansible.windows.win_reboot:
   when:
-    - win_feature.reboot_required is defined
-    - win_feature.reboot_required
+    - use_wsl_install
+
+- name: Install wsl without using wsl --install
+  block:
+    - name: Enable WSL Windows features
+      ansible.windows.win_optional_feature:
+        name: "{{ item }}"
+        state: present
+      register: win_feature
+      loop: "{{ win_features }}"
+
+    - name: Debug win_feature
+      debug:
+        var: win_feature
+
+    - name: Reboot if WSL feature installation requires it
+      ansible.windows.win_reboot:
+      when:
+        - win_feature.reboot_required is defined
+        - win_feature.reboot_required
+  when:
+    - not use_wsl_install
 
 # re: https://github.com/kaisalmen/wsltooling
 - name: WSL download block
@@ -158,3 +165,6 @@
       ansible.windows.win_file:
         path: "{{ wsl_download_dir.path }}"
         state: absent
+
+  when:
+    - not use_wsl_install
