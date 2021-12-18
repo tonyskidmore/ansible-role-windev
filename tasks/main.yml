@@ -80,6 +80,23 @@
   when:
     - vscode_packages | length
 
+- name: Get Visual Studio Code extensions
+  ansible.windows.win_command: "code --list-extensions"
+  changed_when: no
+  register: vscode_installed_extensions
+  when:
+    - vscode_packages | length
+    - vscode_extensions | length
+
+- debug: var=vscode_installed_extensions
+
+- name: Install Visual Studio Code extensions
+  ansible.windows.win_command: "code --install-extension {{ item }}"
+  loop: "{{ vscode_extensions }}"
+  when:
+    - vscode_packages | length
+    - vscode_extensions | length
+
 - name: Install pre-commit
   include_tasks:
     file: pre-commit.yml
