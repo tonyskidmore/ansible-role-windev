@@ -2,6 +2,8 @@
 
 verbosity_level: 0
 
+ansible_remote_path: "{{ ansible_facts['env']['ProgramData'] }}\\ansible"
+
 terraform_packages:
   - terraform
   - terraform-docs
@@ -47,6 +49,7 @@ install_pre_commit: yes
 install_wsl: yes
 use_wsl_install: no
 configure_wsl: yes
+configure_wsl_update: yes
 
 install_windows_packages: no
 

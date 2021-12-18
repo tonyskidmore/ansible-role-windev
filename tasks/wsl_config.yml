@@ -5,15 +5,33 @@
     script: |
       wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
   register: wsl_update
+  when:
+    - configure_wsl_update
 
 - name: Configure default WSL user
   ansible.windows.win_powershell:
     script: |
-      wsl -d ubuntu -u root bash -ic "useradd -m adminuser"
-      wsl -d ubuntu -u root bash -ic "passwd -d adminuser"
-      wsl -d ubuntu -u root bash -ic "echo '%adminuser ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/adminuser"
-      wsl -d ubuntu -u root bash -ic "echo '[user]\ndefault=adminuser' > /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "useradd -m {{ ansible_user }}"
+      wsl -d ubuntu -u root bash -ic "passwd -d {{ ansible_user }}"
+      wsl -d ubuntu -u root bash -ic "echo '%{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ ansible_user }}"
+      wsl -d ubuntu -u root bash -ic "echo '[user]\ndefault={{ ansible_user }}' > /etc/wsl.conf"
   register: wsl_default_user
+
+- name: Create ansible directory in ansible remote path
+  ansible.windows.win_file:
+    path: "{{ ansible_remote_path }}"
+    state: directory
+
+- name: Copy scripts to ansible remote path
+  ansible.windows.win_copy:
+    src: files/update_python_deps.sh
+    dest: "{{ ansible_remote_path }}\\update_python_deps.sh"
+
+- name: Run WSL scripts
+  ansible.windows.win_powershell:
+    script: |
+      wsl -d ubuntu -u root bash -ic "{{ ansible_remote_path }}\\update_python_deps.sh"
+  register: wsl_script_install_packages
 
 - name: Terminate WSL
   ansible.windows.win_powershell:
@@ -27,4 +45,5 @@
   loop:
     - 'wsl_update'
     - 'wsl_default_user'
+    - 'wsl_script_install_packages'
     - 'wsl_terminate'
