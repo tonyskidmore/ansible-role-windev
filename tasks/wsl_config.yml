@@ -25,7 +25,7 @@
 - name: Copy scripts to ansible remote path
   ansible.windows.win_copy:
     src: files/update_python_deps.sh
-    dest: "{{ ansible_remote_path }}\\{{ item }}"
+    dest: "{{ ansible_remote_path }}\\{{ item.script }}"
   loop: "{{ configure_wsl_scripts }}"
 
 - name: Run WSL scripts
