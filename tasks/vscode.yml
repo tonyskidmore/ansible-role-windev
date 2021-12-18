@@ -21,3 +21,4 @@
   when:
     - vscode_packages | length
     - vscode_extensions | length
+    - not item in vscode_installed_extensions.stdout_lines
