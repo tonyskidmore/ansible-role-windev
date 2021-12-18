@@ -1,28 +1,5 @@
 ---
 
-# - name: Update Python package manager components
-#   pip:
-#     name: "{{ item }}"
-#     state: latest
-#   loop:
-#     - pip
-#     - setuptools
-
-- name: Update Python pip
-  win_command: "python -m pip install --upgrade pip"
-
-- name: Update Python setuptools
-  win_command: "python -m pip install --upgrade setuptools"
-
-# - name: Install pipx
-#   pip:
-#     name: pipx
-#     state: present
-#   register: pip_pipx
-#   environment:
-#     PIPX_BIN_DIR = "${env:ProgramFiles(x86)}\pipx_bin"
-#     PIPX_HOME = "${env:ProgramFiles(x86)}\pipx"
-
 - name: Get pipx version
   win_command: "pipx --version"
   changed_when: no
@@ -34,12 +11,22 @@
     var: pipx_version
     verbosity: "{{ verbosity_level }}"
 
+- name: Update Python pip
+  win_command: "python -m pip install --upgrade pip"
+  when:
+    - pipx_version is failed
+
+- name: Update Python setuptools
+  win_command: "python -m pip install --upgrade setuptools"
+  when:
+    - pipx_version is failed
+
 - name: Set pipx envronment
   ansible.windows.win_environment:
     level: machine
     variables:
       PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
-      PIPX_HOME: 'C:\Program Files (x86)\pipx'    
+      PIPX_HOME: 'C:\Program Files (x86)\pipx'
   register: set_pipex_vars
 
   # Add to system path
@@ -73,9 +60,6 @@
   args:
     creates: 'C:\Python310\Scripts\pipx.exe'
   register: pip_pipx
-  # environment:
-  #   PIPX_BIN_DIR: 'C:\Program Files (x86)\pipx_bin'
-  #   PIPX_HOME: 'C:\Program Files (x86)\pipx'
   when:
     - pipx_version is failed
 
