@@ -1,6 +1,6 @@
 ---
 
-verbosity_level: 2
+verbosity_level: 0
 
 terraform_packages:
   - terraform
@@ -46,6 +46,7 @@ vscode_packages:
 install_pre_commit: yes
 install_wsl: yes
 use_wsl_install: no
+configure_wsl: yes
 
 install_windows_packages: no
-configure_wsl: yes
+

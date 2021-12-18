@@ -28,8 +28,6 @@
     - name: Install Windows Subsystem for Linux (wsl2) - wsl --install
       win_command: wsl --install
       register: wsl_install
-      when:
-        - wsl_status is failed
 
     - name: Debug WSL install status
       debug:
@@ -42,6 +40,7 @@
 
   when:
     - use_wsl_install
+    - wsl_status is failed
 
 - name: Install wsl without using wsl --install
   block:
@@ -55,6 +54,7 @@
     - name: Debug win_feature
       debug:
         var: win_feature
+        verbosity: "{{ verbosity_level }}"
 
     - name: Reboot if WSL feature installation requires it
       ansible.windows.win_reboot:
@@ -63,6 +63,7 @@
         - win_feature.reboot_required
   when:
     - not use_wsl_install
+    - wsl_status is failed
 
 # re: https://github.com/kaisalmen/wsltooling
 - name: WSL download block
@@ -113,6 +114,7 @@
     - name: Debug whoami
       debug:
         var: whoami
+        verbosity: "{{ verbosity_level }}"
 
     - name: Run wsl_update_x64.msi installer
       ansible.windows.win_package:
@@ -126,6 +128,7 @@
     - name: Debug wsl_update_x64
       debug:
         var: wsl_update_x64
+        verbosity: "{{ verbosity_level }}"
 
     - name: Set Windows Subsystem for Linux version 2 (wsl2)
       win_command: wsl --set-default-version 2
@@ -136,6 +139,7 @@
     - name: Debug wsl_set_v2
       debug:
         var: wsl_set_v2
+        verbosity: "{{ verbosity_level }}"
 
     - name: Unzip ubuntu file
       community.windows.win_unzip:
@@ -147,6 +151,7 @@
     - name: Debug wsl_unzip
       debug:
         var: wsl_unzip
+        verbosity: "{{ verbosity_level }}"
 
     # worked when ran locally
     - name: Run wsl import
@@ -158,6 +163,7 @@
     - name: Debug wsl_import
       debug:
         var: wsl_import
+        verbosity: "{{ verbosity_level }}"
 
   always:
 
@@ -168,3 +174,4 @@
 
   when:
     - not use_wsl_install
+    - wsl_status is failed
