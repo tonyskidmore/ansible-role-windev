@@ -41,6 +41,7 @@
   when:
     - use_wsl_install
     - wsl_status is failed
+    - ansible_facts['distribution_version'] is version('10.0.19041', '>=')
 
 - name: Install wsl without using wsl --install
   block:
@@ -121,9 +122,6 @@
         path: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
         state: present
       register: wsl_update_x64
-      # become: yes
-      # become_method: runas
-      # become_user: "System"
 
     - name: Debug wsl_update_x64
       debug:
@@ -133,8 +131,6 @@
     - name: Set Windows Subsystem for Linux version 2 (wsl2)
       win_command: wsl --set-default-version 2
       register: wsl_set_v2
-      # when:
-      #   - wsl_status is failed
 
     - name: Debug wsl_set_v2
       debug:
@@ -153,12 +149,9 @@
         var: wsl_unzip
         verbosity: "{{ verbosity_level }}"
 
-    # worked when ran locally
     - name: Run wsl import
       win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
       register: wsl_import
-      # when:
-      #   - wsl_status is failed
 
     - name: Debug wsl_import
       debug:
