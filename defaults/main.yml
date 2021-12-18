@@ -62,7 +62,7 @@ install_pre_commit: yes
 install_wsl: yes
 use_wsl_install: no
 configure_wsl: yes
-configure_wsl_update: yes
+configure_wsl_update: no
 configure_wsl_scripts:
   - script: update_python_deps.sh
     user: root
