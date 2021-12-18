@@ -7,7 +7,7 @@
   loop: "{{ vscode_packages }}"
 
 - name: Get Visual Studio Code extensions
-  ansible.windows.win_command: "code.cmd --list-extensions"
+  ansible.windows.win_shell: "code.cmd --list-extensions"
   changed_when: no
   register: vscode_installed_extensions
   when:
@@ -16,7 +16,7 @@
 - debug: var=vscode_installed_extensions
 
 - name: Install Visual Studio Code extensions
-  ansible.windows.win_command: "code.cmd --install-extension {{ item }}"
+  ansible.windows.win_shell: "code.cmd --install-extension {{ item }}"
   loop: "{{ vscode_extensions }}"
   when:
     - vscode_packages | length
