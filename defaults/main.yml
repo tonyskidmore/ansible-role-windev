@@ -66,7 +66,7 @@ configure_wsl_update: no
 configure_wsl_scripts:
   - script: update_python_deps.sh
     user: root
-  - script: install ansible.sh
+  - script: install_ansible.sh
     user: "{{ ansible_user }}"
 
 install_windows_packages: no
