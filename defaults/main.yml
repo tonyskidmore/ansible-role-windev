@@ -66,6 +66,8 @@ configure_wsl_update: no
 configure_wsl_scripts:
   - script: update_python_deps.sh
     user: root
+  - script: install_pipx.sh
+    user: "{{ ansible_user }}"
   - script: install_ansible.sh
     user: "{{ ansible_user }}"
 
