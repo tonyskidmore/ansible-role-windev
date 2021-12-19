@@ -35,7 +35,7 @@ powershell_packages:
   - powershell-core
   - psscriptanalyzer
   - pester
-  - invoke-build
+  # - invoke-build
   # - az.powershell
 
 win_features:
