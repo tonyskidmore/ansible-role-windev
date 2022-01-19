@@ -47,7 +47,7 @@
 
 - name: Create WSL application shortcut on the desktop
   community.windows.win_shortcut:
-    src: C:\Windows\System32\wsl.exe
+    src: C:\Windows\System32\bash.exe
     dest: C:\Users\Public\Desktop\WSL.lnk
     icon: C:\Windows\System32\wsl.exe,0
 
