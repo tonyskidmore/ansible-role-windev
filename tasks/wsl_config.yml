@@ -16,6 +16,9 @@
       wsl -d ubuntu -u root bash -ic "echo '%{{ ansible_user }} ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ ansible_user }}"
       wsl -d ubuntu -u root bash -ic "echo '[user]' > /etc/wsl.conf"
       wsl -d ubuntu -u root bash -ic "echo 'default={{ ansible_user }}' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "echo '[interop]' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "echo 'enabled = false' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "echo 'appendWindowsPath = false' >> /etc/wsl.conf"
   register: wsl_default_user
 
 - name: Create ansible directory in ansible remote path
