@@ -1,3 +1,3 @@
 #!/bin/bash
 
-pipx install ansible
+/home/adminuser/.local/bin/pipx install ansible --include-deps
