@@ -73,3 +73,11 @@ configure_wsl_scripts:
 
 install_windows_packages: no
 
+git_clone_repos:
+  - name: terraform-azurerm-resourcegroup
+    url: "https://github.com/tonyskidmore/terraform-azurerm-resourcegroup.git"
+    # clone_path: "{{ ansible_facts.user_dir }}\\Documents\\GitHub\\terraform-azurerm-resourcegroup"
+
+git_config:
+  - 'git config --global user.email "16082810+tonyskidmore@users.noreply.github.com"'
+  - 'git config --global user.name "Tony Skidmore"'

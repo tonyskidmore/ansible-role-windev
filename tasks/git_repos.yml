@@ -1,25 +1,34 @@
 ---
 
-- name: Set repo clone destination path
-  set_fact:
-    git_clone_path: "{{ ansible_facts.user_dir }}\\Documents\\GitHub\\terraform-azurerm-resourcegroup"
-
 - name: Create git repo path
+  vars:
+    git_clone_path: "{{ ansible_facts.user_dir }}\\Documents\\GitHub\\{{ item.name }}"
   ansible.windows.win_file:
     path: "{{ git_clone_path }}"
     state: directory
+  loop: "{{ git_clone_repos }}"
+  when:
+    - git_clone_repos is defined
+    - git_clone_repos | length
 
 - name: Clone git repo
-  ansible.windows.win_command: "git clone https://github.com/tonyskidmore/terraform-azurerm-resourcegroup.git {{ git_clone_path }}"
+  vars:
+    git_clone_path: "{{ ansible_facts.user_dir }}\\Documents\\GitHub\\{{ item.name }}"
+  ansible.windows.win_command: "git clone {{ item.url }} {{ git_clone_path }}"
   args:
     creates: "{{ git_clone_path }}\\.git"
+  loop: "{{ git_clone_repos }}"
+  when:
+    - git_clone_repos is defined
+    - git_clone_repos | length
 
 - name: Set git config
   ansible.windows.win_command: "{{ item }}"
   register: git_config
-  loop:
-    - 'git config --global user.email "16082810+tonyskidmore@users.noreply.github.com"'
-    - 'git config --global user.name "Tony Skidmore"'
+  loop: "{{ git_config }}"
+  when:
+    - git_config is defined
+    - git_config | length
 
 - name: Debug git config
   debug:
