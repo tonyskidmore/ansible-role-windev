@@ -7,6 +7,8 @@
 
 - name: Get Windows Subsystem for Linux status
   win_command: wsl --status
+    args:
+      output_encoding_override: utf-8
   register: wsl_status
   ignore_errors: yes
   changed_when: no
