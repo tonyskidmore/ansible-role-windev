@@ -18,9 +18,6 @@
     var: wsl_status
     verbosity: "{{ verbosity_level }}"
 
-- debug:
-    msg: "{{ wsl_status.stdout | to_yaml }}"
-    verbosity: "{{ verbosity_level }}"
 
 # all-in-one method
 # Install WSL with a single command now available in Windows 10 version 2004 and higher
@@ -29,6 +26,8 @@
   block:
     - name: Install Windows Subsystem for Linux (wsl2) - wsl --install
       win_command: wsl --install
+      args:
+        output_encoding_override: utf-16
       register: wsl_install
 
     - name: Debug WSL install status
@@ -101,6 +100,11 @@
     #   become_user: "{{ ansible_user }}"
     #   register: whoami
 
+    # - name: Debug whoami
+    #   debug:
+    #     var: whoami
+    #     verbosity: "{{ verbosity_level }}"
+
     - name: turn UAC off
       win_regedit:
         path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\policies\system
@@ -113,11 +117,6 @@
     - name: reboot after disabling UAC
       win_reboot:
       when: uac_result is changed
-
-    - name: Debug whoami
-      debug:
-        var: whoami
-        verbosity: "{{ verbosity_level }}"
 
     - name: Run wsl_update_x64.msi installer
       ansible.windows.win_package:
@@ -132,6 +131,8 @@
 
     - name: Set Windows Subsystem for Linux version 2 (wsl2)
       win_command: wsl --set-default-version 2
+      args:
+        output_encoding_override: utf-16
       register: wsl_set_v2
 
     - name: Debug wsl_set_v2
@@ -153,6 +154,8 @@
 
     - name: Run wsl import
       win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
+      args:
+        output_encoding_override: utf-16
       register: wsl_import
 
     - name: Debug wsl_import
