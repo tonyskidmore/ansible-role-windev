@@ -1,0 +1,20 @@
+---
+
+- name: Run WSL scripts
+  ansible.windows.win_powershell:
+    script: |
+      wsl -d ubuntu -u {{ item.user }} bash -ic "/mnt/c/ProgramData/ansible/{{ wsl_script_item.script }}"
+  register: wsl_script_install_result
+
+- name: Debug wsl_script_install_result
+  debug:
+    var: wsl_script_install_result
+    verbosity: "{{ verbosity_level }}"
+
+- name: Terminate WSL
+  ansible.windows.win_powershell:
+    script: |
+      wsl -t ubuntu
+  register: wsl_terminate
+  when:
+    - wsl_script_item.terminate_post_script

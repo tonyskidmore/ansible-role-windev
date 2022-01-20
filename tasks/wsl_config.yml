@@ -1,12 +1,12 @@
 ---
 
-- name: Update Ubuntu WSL
-  ansible.windows.win_powershell:
-    script: |
-      wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
-  register: wsl_update
-  when:
-    - configure_wsl_update
+# - name: Update Ubuntu WSL
+#   ansible.windows.win_powershell:
+#     script: |
+#       wsl -d ubuntu -u root bash -ic "apt update; apt upgrade -y"
+#   register: wsl_update
+#   when:
+#     - configure_wsl_update
 
 - name: Configure default WSL user
   ansible.windows.win_powershell:
@@ -21,6 +21,11 @@
       wsl -d ubuntu -u root bash -ic "echo 'appendWindowsPath = false' >> /etc/wsl.conf"
   register: wsl_default_user
 
+- name: Debug wsl_default_user
+  debug:
+    var: wsl_default_user
+    verbosity: "{{ verbosity_level }}"
+
 - name: Create ansible directory in ansible remote path
   ansible.windows.win_file:
     path: "{{ ansible_remote_path }}"
@@ -32,18 +37,15 @@
     dest: "{{ ansible_remote_path }}\\{{ item.script }}"
   loop: "{{ configure_wsl_scripts }}"
 
-- name: Run WSL scripts
-  ansible.windows.win_powershell:
-    script: |
-      wsl -d ubuntu -u {{ item.user }} bash -ic "/mnt/c/ProgramData/ansible/{{ item.script }}"
-  register: wsl_script_install_packages
+- name: Include WSL config scripts
+  include_tasks:
+    file: wsl_scripts.yml
   loop: "{{ configure_wsl_scripts }}"
-
-- name: Terminate WSL
-  ansible.windows.win_powershell:
-    script: |
-      wsl -t ubuntu
-  register: wsl_terminate
+  loop_control:
+    loop_var: wsl_script_item
+  when:
+    - configure_wsl_scripts is defined
+    - configure_wsl_scripts | length
 
 - name: Create WSL application shortcut on the desktop
   community.windows.win_shortcut:
@@ -51,11 +53,4 @@
     dest: C:\Users\Public\Desktop\WSL.lnk
     icon: C:\Windows\System32\wsl.exe,0
 
-- debug:
-    var: "{{ item }}"
-    verbosity: "{{ verbosity_level }}"
-  loop:
-    - 'wsl_update'
-    - 'wsl_default_user'
-    - 'wsl_script_install_packages'
-    - 'wsl_terminate'
+
