@@ -165,7 +165,6 @@
         path: "{{ wsl_download_dir.path }}"
         state: absent
 
-  when:
-    - not use_wsl_install
-    - (wsl_status is failed) or
-      (not wsl_status.stdout is search("Default Distribution: ubuntu"))
+  when: (not use_wsl_install) and
+        (wsl_status is failed) or
+        (wsl_status.stdout is not search('Default Distribution: ubuntu'))
