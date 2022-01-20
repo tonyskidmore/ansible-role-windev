@@ -3,7 +3,7 @@
 - name: Run WSL scripts
   ansible.windows.win_powershell:
     script: |
-      wsl -d ubuntu -u {{ item.user }} bash -ic "/mnt/c/ProgramData/ansible/{{ wsl_script_item.script }}"
+      wsl -d ubuntu -u {{ wsl_script_item.user }} bash -ic "/mnt/c/ProgramData/ansible/{{ wsl_script_item.script }}"
   register: wsl_script_install_result
 
 - name: Debug wsl_script_install_result
