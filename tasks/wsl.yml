@@ -94,12 +94,12 @@
         url: https://aka.ms/wslubuntu2004
         dest: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
 
-    - name: Check my user name
-      ansible.windows.win_whoami:
-      become: yes
-      become_method: runas
-      become_user: "{{ ansible_user }}"
-      register: whoami
+    # - name: Check my user name
+    #   ansible.windows.win_whoami:
+    #   become: yes
+    #   become_method: runas
+    #   become_user: "{{ ansible_user }}"
+    #   register: whoami
 
     - name: turn UAC off
       win_regedit:
