@@ -61,8 +61,8 @@
     - name: Reboot if WSL feature installation requires it
       ansible.windows.win_reboot:
       when:
-        - win_feature.reboot_required is defined
-        - win_feature.reboot_required
+        - win_feature.results | selectattr('reboot_required','defined') |
+          selectattr('reboot_required', 'equalto', true) | list | length
   when:
     - not use_wsl_install
     - wsl_status is failed
