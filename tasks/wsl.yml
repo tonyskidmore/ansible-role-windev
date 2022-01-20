@@ -167,5 +167,5 @@
 
   when:
     - not use_wsl_install
-    - (wsl_status is failed)
-      or (not wsl_status.stdout is search("Default Distribution: ubuntu")
+    - (wsl_status is failed) or
+      (not wsl_status.stdout is search("Default Distribution: ubuntu"))
