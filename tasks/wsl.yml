@@ -27,7 +27,7 @@
     - name: Install Windows Subsystem for Linux (wsl2) - wsl --install
       win_command: wsl --install
       args:
-        output_encoding_override: windows-1250
+        output_encoding_override: utf-16
       register: wsl_install
 
     - name: Debug WSL install status
@@ -172,4 +172,5 @@
 
   when:
     - not use_wsl_install
-    - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout'))
+    - '"Default Distribution: ubuntu" not in wsl_status.stdout'
+    # - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout'))
