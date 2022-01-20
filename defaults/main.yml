@@ -78,7 +78,7 @@ configure_wsl_scripts:
     user: "{{ ansible_user }}"
     terminate_post_script: no
 
-install_windows_packages: no
+install_windows_packages: yes
 
 git_clone_repos:
   - name: terraform-azurerm-resourcegroup
