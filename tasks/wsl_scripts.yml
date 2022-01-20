@@ -18,3 +18,10 @@
   register: wsl_terminate
   when:
     - wsl_script_item.terminate_post_script
+
+# https://github.com/MicrosoftDocs/WSL/blob/main/WSL/wsl-config.md#the-8-second-rule
+- name: Wait for WSL termination
+  pause:
+    seconds: 10
+  when:
+    - wsl_script_item.terminate_post_script
