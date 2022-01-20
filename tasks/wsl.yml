@@ -172,5 +172,5 @@
 
   when:
     - not use_wsl_install
+    - wsl_status is failed
     - '"Default Distribution: ubuntu" not in wsl_status.stdout'
-    # - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout'))
