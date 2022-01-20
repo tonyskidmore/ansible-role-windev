@@ -5,7 +5,7 @@
     var: ansible_facts
     verbosity: "{{ verbosity_level }}"
 
-- name: Install Windows Subsystem for Linux (wsl2)
+- name: Get Windows Subsystem for Linux status
   win_command: wsl --status
   register: wsl_status
   ignore_errors: yes
@@ -167,4 +167,5 @@
 
   when:
     - not use_wsl_install
-    - wsl_status is failed
+    - (wsl_status is failed)
+      or (not wsl_status.stdout is search("Default Distribution: ubuntu")

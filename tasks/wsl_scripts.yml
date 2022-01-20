@@ -1,6 +1,6 @@
 ---
 
-- name: Run WSL scripts
+- name: "Run WSL script - {{ wsl_script_item.script }}""
   ansible.windows.win_powershell:
     script: |
       wsl -d ubuntu -u {{ wsl_script_item.user }} bash -ic "/mnt/c/ProgramData/ansible/{{ wsl_script_item.script }}"
