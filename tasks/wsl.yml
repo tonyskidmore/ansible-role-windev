@@ -157,7 +157,7 @@
       args:
         output_encoding_override: utf-16
       register: wsl_import
-      until: wsl_import.rc == 0
+      until: wsl_import.rc == 0 or '"A distribution with the supplied name already exists" not in wsl_import.stdout'
       retries: 5
       delay: 60
       changed_when: '"A distribution with the supplied name already exists" not in wsl_import.stdout'
