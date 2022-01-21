@@ -29,7 +29,7 @@ golang_packages:
 
 windows_packages:
   # windows terminal package fails
-  - microsoft-windows-terminal
+  # - microsoft-windows-terminal
   - 7zip
 
 powershell_packages:
