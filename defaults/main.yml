@@ -28,6 +28,7 @@ golang_packages:
   - dep
 
 windows_packages:
+  # TODO:
   # windows terminal package fails
   # - microsoft-windows-terminal
   - 7zip
@@ -58,6 +59,7 @@ vscode_extensions:
   - wwm.better-align
   - PKief.material-icon-theme
   - esbenp.prettier-vscode
+  - wayou.vscode-todo-highlight
 
 install_pre_commit: yes
 install_wsl: yes
