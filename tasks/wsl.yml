@@ -160,6 +160,9 @@
       # until: wsl_import.stdout.find("success") != -1
       # retries: 5
       # delay: 60
+      failed_when:
+        - wsl_import.rc != 0
+        - '"A distribution with the supplied name already exists" not in result.stdout'
 
     - name: Debug wsl_import
       debug:
