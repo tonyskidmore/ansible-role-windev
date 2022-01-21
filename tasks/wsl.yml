@@ -157,21 +157,21 @@
       args:
         output_encoding_override: utf-16
       register: wsl_import
-      until: wsl_import.stdout.find("success") != -1
-      retries: 5
-      delay: 60
+      # until: wsl_import.stdout.find("success") != -1
+      # retries: 5
+      # delay: 60
 
     - name: Debug wsl_import
       debug:
         var: wsl_import
         verbosity: "{{ verbosity_level }}"
 
-  always:
+  # always:
 
-    - name: Remove temp download directory
-      ansible.windows.win_file:
-        path: "{{ wsl_download_dir.path }}"
-        state: absent
+  #   - name: Remove temp download directory
+  #     ansible.windows.win_file:
+  #       path: "{{ wsl_download_dir.path }}"
+  #       state: absent
 
   when:
     - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout')
