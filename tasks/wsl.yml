@@ -152,11 +152,14 @@
         var: wsl_unzip
         verbosity: "{{ verbosity_level }}"
 
-    - name: Run wsl import
+    - name: Run wsl import ubuntu
       win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
       args:
         output_encoding_override: utf-16
       register: wsl_import
+      until: wsl_import.stdout.find("success") != -1
+      retries: 5
+      delay: 60
 
     - name: Debug wsl_import
       debug:
@@ -171,6 +174,6 @@
         state: absent
 
   when:
+    - (wsl_status is failed) or
+      ('"Default Distribution: ubuntu" not in wsl_status.stdout')
     - not use_wsl_install
-    - wsl_status is failed
-    - '"Default Distribution: ubuntu" not in wsl_status.stdout'
