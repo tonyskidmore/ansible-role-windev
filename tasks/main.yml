@@ -98,6 +98,9 @@
   win_chocolatey:
     name: "{{ item }}"
     state: present
+  become: yes
+  become_user: "{{ ansible_user }}"
+  become_method: runas
   loop: "{{ windows_packages }}"
   when:
     - install_windows_packages
