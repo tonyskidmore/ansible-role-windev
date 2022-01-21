@@ -157,9 +157,10 @@
       args:
         output_encoding_override: utf-16
       register: wsl_import
-      # until: wsl_import.stdout.find("success") != -1
-      # retries: 5
-      # delay: 60
+      until: wsl_import.rc == 0
+      retries: 5
+      delay: 60
+      changed_when: '"A distribution with the supplied name already exists" not in wsl_import.stdout'
       failed_when:
         - wsl_import.rc != 0
         - '"A distribution with the supplied name already exists" not in wsl_import.stdout'
@@ -169,12 +170,12 @@
         var: wsl_import
         verbosity: "{{ verbosity_level }}"
 
-  # always:
+  always:
 
-  #   - name: Remove temp download directory
-  #     ansible.windows.win_file:
-  #       path: "{{ wsl_download_dir.path }}"
-  #       state: absent
+    - name: Remove temp download directory
+      ansible.windows.win_file:
+        path: "{{ wsl_download_dir.path }}"
+        state: absent
 
   when:
     - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout')
