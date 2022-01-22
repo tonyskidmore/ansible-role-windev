@@ -66,6 +66,7 @@
         - inventory
         - ansible.cfg
         - linux.yml
+        - requirements.yml
 
   when:
     - ssh_key_stat.stat.exists
