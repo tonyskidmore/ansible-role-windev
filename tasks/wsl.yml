@@ -172,7 +172,9 @@
 
     - name: Test for ubuntu distribution
       debug:
-        msg: "{{ wsl_status.stdout is not search("Default Distribution: ubuntu") }}"
+        msg: "Ubuntu distribution found"
+      when:
+        - wsl_status.stdout is search("Default Distribution: ubuntu")
 
   always:
 
