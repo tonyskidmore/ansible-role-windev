@@ -75,7 +75,11 @@
       debug:
         msg: "Ubuntu distribution found"
       when:
-        - '"Default Distribution: ubuntu" in wsl_status.stdout'
+        - '"Default Distribution: ubuntu" not in wsl_status.stdout'
+
+    - name: Debug wsl_status
+      debug:
+        var: wsl_status
 
     - name: Create wsl temporary directory
       ansible.windows.win_tempfile:
@@ -184,6 +188,5 @@
         state: absent
 
   when:
-    - (wsl_status is failed) or (wsl_status.stdout is not search("Default Distribution: ubuntu"))
+    - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout')
     - not use_wsl_install
-    # - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout')
