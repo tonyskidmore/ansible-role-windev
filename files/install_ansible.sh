@@ -14,7 +14,7 @@ else
 fi
 
 mkdir -p ~/ansible
-files=(inventory ansible.cfg linux.yml)
+files=(inventory ansible.cfg linux.yml requirements.yml)
 for file in "${files[@]}"
 do
     if [[ -f "/mnt/c/ProgramData/ansible/${file}" ]]
