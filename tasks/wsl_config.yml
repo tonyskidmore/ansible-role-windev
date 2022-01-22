@@ -31,6 +31,35 @@
     path: "{{ ansible_remote_path }}"
     state: directory
 
+- name: Set local SSH key path fact
+  set_fact:
+    ssh_key_path: "{{ playbook_dir }}/win_files/id_rsa"
+
+- name: Check for SSH private key
+  ansible.windows.win_stat:
+    path: "{{ ssh_key_path }}"
+  register: ssh_key_stat
+
+- name: Debug ssh_key_stat
+  debug:
+    var: ssh_key_stat
+    verbosity: "{{ verbosity_level }}"
+
+- name: Create SSH key private key file
+  block:
+
+    - name: Get decoded SSH private key content
+      set_fact:
+        ssh_private_key_content: "{{ lookup('file', ssh_key_path) | b64decode }}"
+
+    - name: Copy SSH key to ansible remote path
+      ansible.windows.win_copy:
+        content: "{{ ssh_private_key_content }}"
+        dest: "{{ ansible_remote_path }}\\id_rsa"
+
+  when:
+    - ssh_key_stat.stat.exists
+
 - name: Copy scripts to ansible remote path
   ansible.windows.win_copy:
     src: "files/{{ item.script }}"
