@@ -57,6 +57,15 @@
         content: "{{ ssh_private_key_content }}"
         dest: "{{ ansible_remote_path }}\\id_rsa"
 
+    - name: Copy other ansible content files
+      ansible.windows.win_copy:
+        src: "{{ playbook_dir }}/win_files/{{ item }}"
+        dest: "{{ ansible_remote_path }}\\"
+      loop:
+        - inventory
+        - ansible.cfg
+        - linux.yml
+
   when:
     - ssh_key_stat.stat.exists
 
