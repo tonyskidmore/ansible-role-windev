@@ -174,7 +174,7 @@
       debug:
         msg: "Ubuntu distribution not found"
       when:
-        - wsl_status.stdout is not search("Default Distribution: ubuntu")
+        - not wsl_status.stdout is search("Default Distribution: ubuntu")
 
   always:
 
