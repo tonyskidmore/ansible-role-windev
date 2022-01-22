@@ -170,6 +170,10 @@
         var: wsl_import
         verbosity: "{{ verbosity_level }}"
 
+    - name: Test for ubuntu distribution
+      debug:
+        msg: "{{ wsl_status.stdout is not search("Default Distribution: ubuntu") }}"
+
   always:
 
     - name: Remove temp download directory
