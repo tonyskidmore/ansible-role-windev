@@ -36,9 +36,10 @@
     ssh_key_path: "{{ playbook_dir }}/win_files/id_rsa"
 
 - name: Check for SSH private key
-  ansible.windows.win_stat:
+  ansible.builtin.stat:
     path: "{{ ssh_key_path }}"
   register: ssh_key_stat
+  delegate_to: localhost
 
 - name: Debug ssh_key_stat
   debug:

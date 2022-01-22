@@ -32,6 +32,7 @@ windows_packages:
   # windows terminal package fails
   # - microsoft-windows-terminal
   - 7zip
+  - notepadplusplus
 
 powershell_packages:
   - powershell-core
@@ -54,12 +55,20 @@ vscode_extensions:
   - ms-vscode-remote.remote-ssh-edit
   - ms-vscode-remote.remote-wsl
   - ms-azuretools.vscode-azureterraform
+  - ms-azuretools.vscode-azureterraform
+  - ms-azuretools.vscode-bicep
+  - ms-vscode.powershell
+  - ms-vscode.azurecli
   - shardulm94.trailing-spaces
   - shd101wyy.markdown-preview-enhanced
   - wwm.better-align
   - PKief.material-icon-theme
+  - redhat.vscode-yaml
+  - redhat.ansible
   - esbenp.prettier-vscode
   - wayou.vscode-todo-highlight
+  - rangav.vscode-thunder-client
+  - GitHub.copilot
 
 install_pre_commit: yes
 install_wsl: yes
