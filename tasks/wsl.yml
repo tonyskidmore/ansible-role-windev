@@ -178,6 +178,6 @@
         state: absent
 
   when:
-    - (wsl_status is failed) or (wsl_status.stdout is search("Default Distribution: ubuntu"))
+    - (wsl_status is failed) or (wsl_status.stdout is not search("Default Distribution: ubuntu"))
     - not use_wsl_install
     # - (wsl_status is failed) or ('"Default Distribution: ubuntu" not in wsl_status.stdout')
