@@ -86,7 +86,7 @@ configure_wsl_scripts:
     terminate_post_script: yes
   - script: install_ansible.sh
     user: "{{ ansible_user }}"
-    terminate_post_script: no
+    terminate_post_script: yes
 
 install_windows_packages: yes
 
