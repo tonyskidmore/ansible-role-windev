@@ -88,8 +88,23 @@
   include_tasks:
     file: git_repos.yml
 
+- name: Check MTU of 'vEthernet (WSL)' interface
+  win_shell: "(Get-NetIPInterface -InterfaceAlias 'vEthernet (WSL)').NlMtu"
+  changed_when: False
+  register: wsl_mtu
+
+- name: debug wsl_mtu
+  debug:
+    var: wsl_mtu
+    verbosity: "{{ verbosity_level }}"
+
+- name: Change MTU of the interface {{ interface_renamed.stdout|trim }} on IPv4 from {{ mtu.stdout|trim }} bytes to {{ mtu_size }} bytes
+  win_shell: "Set-NetIPInterface -InterfaceAlias 'vEthernet (WSL)' -NlMtuBytes 1350 -AddressFamily 'IPv4'"
+  changed_when: mtu.stdout|trim != 1350
+
 - name: Set WSL mtu size
-  ansible.windows.win_shell: 'netsh interface ipv4 set subinterface "vEthernet (WSL)" mtu=1350 store=persistent'
+  ansible.windows.win_command: |
+    netsh interface ipv4 set subinterface "vEthernet (WSL)" mtu=1350 store=persistent
   become: yes
   become_user: "{{ ansible_user }}"
   become_method: runas
