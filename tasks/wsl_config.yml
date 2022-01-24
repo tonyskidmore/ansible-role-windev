@@ -93,3 +93,17 @@
     dest: C:\Users\Public\Desktop\WSL.lnk
     icon: C:\Windows\System32\wsl.exe,0
     directory: "\\\\wsl$\\ubuntu\\home\\{{ ansible_user }}"
+
+- name: Check MTU of 'vEthernet (WSL)' interface
+  win_shell: "(Get-NetIPInterface -InterfaceAlias 'vEthernet (WSL)').NlMtu"
+  changed_when: False
+  register: wsl_mtu
+
+- name: debug wsl_mtu
+  debug:
+    var: wsl_mtu
+    verbosity: "{{ verbosity_level }}"
+
+- name: Change MTU of the interface {{ interface_renamed.stdout|trim }} on IPv4 from {{ mtu.stdout|trim }} bytes to {{ mtu_size }} bytes
+  win_shell: "Set-NetIPInterface -InterfaceAlias 'vEthernet (WSL)' -NlMtuBytes 1350 -AddressFamily 'IPv4'"
+  changed_when: wsl_mtu.stdout|trim != 1350
