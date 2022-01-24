@@ -88,6 +88,20 @@
   include_tasks:
     file: git_repos.yml
 
+- name: Set WSL mtu size
+  ansible.windows.win_shell: 'netsh interface ipv4 set subinterface "vEthernet (WSL)" mtu=1350 store=persistent'
+  become: yes
+  become_user: "{{ ansible_user }}"
+  become_method: runas
+  register: wsl_mtu
+  when:
+    - configure_wsl
+
+- name: debug wsl_mtu
+  debug:
+    var: wsl_mtu
+    verbosity: "{{ verbosity_level }}"
+
 - name: Configure Windows Subsystem for Linux (WSL)
   include_tasks:
     file: wsl_config.yml
