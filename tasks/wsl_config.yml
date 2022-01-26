@@ -87,12 +87,12 @@
     - configure_wsl_scripts is defined
     - configure_wsl_scripts | length
 
-    - name: Create WSL application shortcut on the desktop
-      community.windows.win_shortcut:
-        src: C:\\Windows\\System32\\bash.exe
-        dest: C:\Users\Public\Desktop\WSL.lnk
-        icon: C:\Windows\System32\wsl.exe,0
-        directory: "\\\\wsl$\\ubuntu\\home\\{{ ansible_user }}"
+- name: Create WSL application shortcut on the desktop
+  community.windows.win_shortcut:
+    src: C:\\Windows\\System32\\bash.exe
+    dest: C:\Users\Public\Desktop\WSL.lnk
+    icon: C:\Windows\System32\wsl.exe,0
+    directory: "\\\\wsl$\\ubuntu\\home\\{{ ansible_user }}"
 
 - name: Experimenting with MTU size due to WSL -> debian based SSH communication issues
   block:
