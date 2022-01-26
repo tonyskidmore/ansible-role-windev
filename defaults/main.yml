@@ -88,6 +88,9 @@ configure_wsl_scripts:
     user: "{{ ansible_user }}"
     terminate_post_script: yes
 
+configure_wsl_mtu: true
+wsl_mtu_size: 1472
+
 install_windows_packages: yes
 
 git_clone_repos:
