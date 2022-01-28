@@ -177,7 +177,7 @@
         var: wsl_import
         verbosity: "{{ verbosity_level }}"
 
-  always:
+  # always:
 
     # - name: Remove temp download directory
     #   ansible.windows.win_file:
