@@ -185,6 +185,6 @@
         state: absent
 
   when:
-    - wsl_status.rc != 0
     - '"Default Distribution: ubuntu" not in wsl_status.stdout'
     - not use_wsl_install
+    # - wsl_status.rc != 0
