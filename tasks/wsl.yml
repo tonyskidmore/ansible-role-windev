@@ -179,10 +179,10 @@
 
   always:
 
-    - name: Remove temp download directory
-      ansible.windows.win_file:
-        path: "{{ wsl_download_dir.path }}"
-        state: absent
+    # - name: Remove temp download directory
+    #   ansible.windows.win_file:
+    #     path: "{{ wsl_download_dir.path }}"
+    #     state: absent
 
   when:
     - '"Default Distribution: ubuntu" not in wsl_status.stdout'
