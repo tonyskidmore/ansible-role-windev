@@ -14,6 +14,8 @@ azure_packages:
   - azure-cli
 
 # Unused chocolatey packages
+# could use chocolatey to install but does not allow for end-to-end
+# automation used in the test scenarios
 # wsl_base_packages:
 #   - wsl2
 
