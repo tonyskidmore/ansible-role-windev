@@ -23,7 +23,7 @@
     - name: Download msix .zip package
       ansible.windows.win_get_url:
         url: https://github.com/microsoft/terminal/releases/download/v1.11.3471.0/Microsoft.WindowsTerminal_1.11.3471.0_8wekyb3d8bbwe.msixbundle
-        dest: "{{ msix_download_dir.path }}\\win_term.msix"
+        dest: "{{ msix_download_dir.path }}\\win_term.msixbundle"
 
     # - name: Unzip msix file
     #   community.windows.win_unzip:
@@ -39,9 +39,16 @@
 
     - name: Install Windows Terminal msixbundle
       ansible.windows.win_package:
-        path: "{{ msix_download_dir.path }}\\win_term.msix"
+        path: "{{ msix_download_dir.path }}\\win_term.msixbundle"
+        provider: msix
         state: present
       register: win_term_msix_install
+      become: yes
+      become_method: runas
+      become_flags: logon_type=new_credential logon_flags=netcredentials_only
+      vars:
+        ansible_become_user: "{{ ansible_user }}"
+        ansible_become_password: "{{ ansible_password }}"
 
     - name: Debug win_term_msix_install
       debug:
