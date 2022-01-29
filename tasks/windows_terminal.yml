@@ -12,6 +12,13 @@
         state: directory
         suffix: msix
       register: msix_download_dir
+      tags:
+        - windows_terminal
+
+    - name: Debug msix_download_dir
+      debug:
+        var: msix_download_dir
+        verbosity: "{{ verbosity_level }}"
 
     - name: Download msix .zip package
       ansible.windows.win_get_url:
@@ -22,7 +29,7 @@
       community.windows.win_unzip:
         src: "{{ msix_download_dir.path }}\\win_term.zip"
         dest: "{{ msix_download_dir.path }}\\win_term_dir"
-        creates: "{{ wsl_ubuntu_dir.path }}\\win_term_dir"
+        creates: "{{ msix_download_dir.path }}\\win_term_dir"
       register: msix_unzip
 
     - name: Debug msix_unzip
