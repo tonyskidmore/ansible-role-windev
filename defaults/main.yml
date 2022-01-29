@@ -32,10 +32,15 @@ golang_packages:
 
 windows_packages:
   # TODO:
-  # windows terminal package fails
+  # windows terminal package seems non-robust and fails
+  # switching to alternate method of installation
   # - microsoft-windows-terminal
   - 7zip
   - notepadplusplus
+
+windows_terminal:
+  install: yes
+  method: msix
 
 powershell_packages:
   - powershell-core
