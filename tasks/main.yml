@@ -107,9 +107,7 @@
     - windows_packages | length
 
 - name: Install windows terminal
-  import_tasks:
+  include_tasks:
     file: windows_terminal.yml
-  tags:
-    - windows_terminal
   when:
     - windows_terminal.install
