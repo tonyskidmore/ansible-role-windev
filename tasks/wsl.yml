@@ -211,6 +211,13 @@
         verbosity: "{{ verbosity_level }}"
 
     # TODO: add path to ubuntu path
+    - name: Pipx ensure path
+      win_path:
+      scope: user
+      elements:
+        - "{{ ansible_user_dir }}\\wsl"
+      when:
+        - wsl_import is changed
 
   # TODO: enable automated tidy up
   # always:
