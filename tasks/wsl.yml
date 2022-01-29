@@ -211,11 +211,11 @@
         verbosity: "{{ verbosity_level }}"
 
     # TODO: add path to ubuntu path
-    - name: Pipx ensure path
+    - name: Add wsl distribution to user path
       win_path:
-      scope: user
-      elements:
-        - "{{ ansible_user_dir }}\\wsl"
+        scope: user
+        elements:
+          - "{{ ansible_user_dir }}\\wsl"
       when:
         - wsl_import is changed
 
