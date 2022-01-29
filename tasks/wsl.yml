@@ -101,11 +101,11 @@
         suffix: wsl
       register: wsl_download_dir
 
-    - name: Create ubuntu temporary directory
-      ansible.windows.win_tempfile:
-        state: directory
-        suffix: wsl_ubuntu
-      register: wsl_ubuntu_dir
+    # - name: Create ubuntu temporary directory
+    #   ansible.windows.win_tempfile:
+    #     state: directory
+    #     suffix: wsl_ubuntu
+    #   register: wsl_ubuntu_dir
 
     # TODO: improve downloading
     - name: Download WSL Update
@@ -120,7 +120,7 @@
 
     - name: Download Ubuntu 20.04
       ansible.windows.win_get_url:
-        url: "{{ wsl_root_fs_url }}"
+        url: "{{ ubuntu_root_fs_url }}"
         dest: "{{ wsl_download_dir.path }}\\{{ wsl_rootfs_name }}"
 
     # - name: Check my user name
