@@ -45,7 +45,7 @@
       register: win_term_msix_install
       become: yes
       become_method: runas
-      # become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+      become_flags: logon_type=new_credentials logon_flags=netcredentials_only
       vars:
         ansible_become_user: "{{ ansible_user }}"
         ansible_become_password: "{{ ansible_password }}"
