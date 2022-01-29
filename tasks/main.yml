@@ -109,5 +109,7 @@
 - name: Install windows terminal
   include_tasks:
     file: windows_terminal.yml
+  tags:
+    - windows_terminal
   when:
     - windows_terminal.install
