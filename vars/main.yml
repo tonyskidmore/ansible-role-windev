@@ -3,3 +3,4 @@
 # https://github.com/MicrosoftDocs/WSL/issues/977
 wsl2_update_msi: "{{ 'https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi' if ansible_env.PROCESSOR_ARCHITECTURE == 'AMD64' else 'https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi' }}"
 wsl2_reboot_required: no
+wsl_rootfs_name: wsl-rootfs.tar.gz

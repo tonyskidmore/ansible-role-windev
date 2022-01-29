@@ -44,8 +44,33 @@
     - wsl_status is failed
     - ansible_facts['distribution_version'] is version('10.0.19041', '>=')
 
+# - name: Install wsl without using wsl --install
+#   block:
+#     - name: Enable WSL Windows features
+#       ansible.windows.win_optional_feature:
+#         name: "{{ item }}"
+#         state: present
+#       register: win_feature
+#       loop: "{{ win_features }}"
+
+#     - name: Debug win_feature
+#       debug:
+#         var: win_feature
+#         verbosity: "{{ verbosity_level }}"
+
+#     - name: Reboot if WSL feature installation requires it
+#       ansible.windows.win_reboot:
+#       when:
+#         - win_feature.results | selectattr('reboot_required','defined') |
+#           selectattr('reboot_required', 'equalto', true) | list | length
+#   when:
+#     - not use_wsl_install
+#     - wsl_status is failed
+
+# re: https://github.com/kaisalmen/wsltooling
 - name: Install wsl without using wsl --install
   block:
+
     - name: Enable WSL Windows features
       ansible.windows.win_optional_feature:
         name: "{{ item }}"
@@ -63,13 +88,6 @@
       when:
         - win_feature.results | selectattr('reboot_required','defined') |
           selectattr('reboot_required', 'equalto', true) | list | length
-  when:
-    - not use_wsl_install
-    - wsl_status is failed
-
-# re: https://github.com/kaisalmen/wsltooling
-- name: WSL download block
-  block:
 
     - name: Test for ubuntu distribution
       debug:
@@ -89,15 +107,21 @@
         suffix: wsl_ubuntu
       register: wsl_ubuntu_dir
 
+    # TODO: improve downloading
     - name: Download WSL Update
       ansible.windows.win_get_url:
         url: https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
         dest: "{{ wsl_download_dir.path }}\\wsl_update_x64.msi"
 
+    - name: Download Ubuntu MD5 checksums
+      ansible.windows.win_get_url:
+        url: "{{ ubuntu_md5sums }}"
+        dest: "{{ wsl_download_dir.path }}\\MD5SUMS"
+
     - name: Download Ubuntu 20.04
       ansible.windows.win_get_url:
-        url: https://aka.ms/wslubuntu2004
-        dest: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
+        url: "{{ wsl_root_fs_url }}"
+        dest: "{{ wsl_download_dir.path }}\\{{ wsl_rootfs_name }}"
 
     # - name: Check my user name
     #   ansible.windows.win_whoami:
@@ -146,43 +170,48 @@
         var: wsl_set_v2
         verbosity: "{{ verbosity_level }}"
 
-    - name: Unzip ubuntu file
-      community.windows.win_unzip:
-        src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
-        dest: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
-        creates: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
-      register: wsl_unzip
+    # - name: Unzip ubuntu file
+    #   community.windows.win_unzip:
+    #     src: "{{ wsl_download_dir.path }}\\ubuntuLTS.zip"
+    #     dest: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
+    #     creates: "{{ wsl_ubuntu_dir.path }}\\ubuntu"
+    #   register: wsl_unzip
 
-    - name: Debug wsl_unzip
-      debug:
-        var: wsl_unzip
-        verbosity: "{{ verbosity_level }}"
-
-    # - name: Run wsl import ubuntu
-    #   win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_ubuntu_dir.path }}\\ubuntu\\install.tar.gz"
-    #   args:
-    #     output_encoding_override: utf-16
-    #   register: wsl_import
-    #   until: (wsl_import.rc == 0) or (wsl_import.rc == 4294967295)
-    #   # or '"A distribution with the supplied name already exists" in wsl_import.stdout'
-    #   retries: 5
-    #   delay: 60
-    #   changed_when: '"A distribution with the supplied name already exists" not in wsl_import.stdout'
-    #   failed_when:
-    #     - wsl_import.rc != 0
-    #     - '"A distribution with the supplied name already exists" not in wsl_import.stdout'
+    # - name: Debug wsl_unzip
+    #   debug:
+    #     var: wsl_unzip
+    #     verbosity: "{{ verbosity_level }}"
 
     - name: Run wsl import ubuntu
-      ansible.windows.win_package:
-        path: "{{ wsl_ubuntu_dir.path }}\\ubuntu\\Ubuntu_2004.2021.825.0_x64.appx"
-        state: present
+      win_command: "wsl --import ubuntu {{ ansible_user_dir }}\\wsl {{ wsl_download_dir.path }}\\{{ wsl_rootfs_name }}"
+      args:
+        output_encoding_override: utf-16
       register: wsl_import
+      until: (wsl_import.rc == 0) or (wsl_import.rc == 4294967295)
+      # or '"A distribution with the supplied name already exists" in wsl_import.stdout'
+      retries: 5
+      delay: 60
+      changed_when: '"A distribution with the supplied name already exists" not in wsl_import.stdout'
+      failed_when:
+        - wsl_import.rc != 0
+        - '"A distribution with the supplied name already exists" not in wsl_import.stdout'
+
+    # could download and install using appx package but need to test if
+    # the configuration aspect can be automated
+    # - name: Run wsl import ubuntu
+    #   ansible.windows.win_package:
+    #     path: "{{ wsl_ubuntu_dir.path }}\\ubuntu\\Ubuntu_2004.2021.825.0_x64.appx"
+    #     state: present
+    #   register: wsl_import
 
     - name: Debug wsl_import
       debug:
         var: wsl_import
         verbosity: "{{ verbosity_level }}"
 
+    # TODO: add path to ubuntu path
+
+  # TODO: enable automated tidy up
   # always:
 
     # - name: Remove temp download directory

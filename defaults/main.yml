@@ -13,11 +13,12 @@ terraform_packages:
 azure_packages:
   - azure-cli
 
-wsl_base_packages:
-  - wsl2
+# Unused chocolatey packages
+# wsl_base_packages:
+#   - wsl2
 
-wsl_packages:
-  - wsl-ubuntu-2004
+# wsl_packages:
+#   - wsl-ubuntu-2004
 
 # Python 3 not working correctly?
 python_packages:
@@ -72,6 +73,10 @@ vscode_extensions:
 install_pre_commit: yes
 install_wsl: yes
 use_wsl_install: no
+# relaced https://aka.ms/wslubuntu2004
+ubuntu_root_fs_url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-wsl.rootfs.tar.gz
+ubuntu_md5sums: https://cloud-images.ubuntu.com/focal/current/MD5SUMS
+
 configure_wsl: yes
 configure_wsl_update: yes
 configure_wsl_scripts:
