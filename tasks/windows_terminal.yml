@@ -22,23 +22,28 @@
 
     - name: Download msix .zip package
       ansible.windows.win_get_url:
-        url: https://github.com/microsoft/terminal/archive/refs/tags/v1.11.3471.0.zip
-        dest: "{{ msix_download_dir.path }}\\win_term.zip"
+        url: https://github.com/microsoft/terminal/releases/download/v1.11.3471.0/Microsoft.WindowsTerminal_1.11.3471.0_8wekyb3d8bbwe.msixbundle
+        dest: "{{ msix_download_dir.path }}\\win_term.msix"
 
-    - name: Unzip msix file
-      community.windows.win_unzip:
-        src: "{{ msix_download_dir.path }}\\win_term.zip"
-        dest: "{{ msix_download_dir.path }}\\win_term_dir"
-        creates: "{{ msix_download_dir.path }}\\win_term_dir"
-      register: msix_unzip
+    # - name: Unzip msix file
+    #   community.windows.win_unzip:
+    #     src: "{{ msix_download_dir.path }}\\win_term.zip"
+    #     dest: "{{ msix_download_dir.path }}\\win_term_dir"
+    #     creates: "{{ msix_download_dir.path }}\\win_term_dir"
+    #   register: msix_unzip
 
-    - name: Debug msix_unzip
+    # - name: Debug msix_unzip
+    #   debug:
+    #     var: msix_unzip
+    #     verbosity: "{{ verbosity_level }}"
+
+    - name: Install Windows Terminal msixbundle
+      ansible.windows.win_package:
+        path: "{{ msix_download_dir.path }}\\win_term.msix"
+        state: present
+      register: win_term_msix_install
+
+    - name: Debug win_term_msix_install
       debug:
-        var: msix_unzip
+        var: win_term_msix_install
         verbosity: "{{ verbosity_level }}"
-
-    # - name: Run wsl import ubuntu
-    #   ansible.windows.win_package:
-    #     path: "{{ wsl_ubuntu_dir.path }}\\ubuntu\\Ubuntu_2004.2021.825.0_x64.appx"
-    #     state: present
-    #   register: wsl_import
