@@ -198,6 +198,7 @@
 
     # could download and install using appx package but need to test if
     # the configuration aspect can be automated
+    # see: https://wiki.ubuntu.com/WSL
     # - name: Run wsl import ubuntu
     #   ansible.windows.win_package:
     #     path: "{{ wsl_ubuntu_dir.path }}\\ubuntu\\Ubuntu_2004.2021.825.0_x64.appx"
