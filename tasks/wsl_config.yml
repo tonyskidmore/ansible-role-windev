@@ -8,6 +8,12 @@
 #   when:
 #     - configure_wsl_update
 
+- name: Copy scripts to ansible remote path
+  ansible.windows.win_copy:
+    src: "files/{{ item.script }}"
+    dest: "{{ ansible_remote_path }}\\{{ item.script }}"
+  loop: "{{ configure_wsl_scripts }}"
+
 - name: Configure default WSL user
   ansible.windows.win_powershell:
     script: |
@@ -96,12 +102,6 @@
 
   when:
     - configure_wsl_mtu
-
-- name: Copy scripts to ansible remote path
-  ansible.windows.win_copy:
-    src: "files/{{ item.script }}"
-    dest: "{{ ansible_remote_path }}\\{{ item.script }}"
-  loop: "{{ configure_wsl_scripts }}"
 
 - name: Include WSL config scripts
   include_tasks:
