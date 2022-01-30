@@ -39,7 +39,7 @@ windows_packages:
   - notepadplusplus
 
 windows_terminal:
-  install: yes
+  install: no
   method: msix
 
 powershell_packages:

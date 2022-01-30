@@ -19,6 +19,10 @@
       wsl -d ubuntu -u root bash -ic "echo '[interop]' >> /etc/wsl.conf"
       wsl -d ubuntu -u root bash -ic "echo 'enabled = false' >> /etc/wsl.conf"
       wsl -d ubuntu -u root bash -ic "echo 'appendWindowsPath = false' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "echo '[network]' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "echo 'generateResolvConf = false' >> /etc/wsl.conf"
+      wsl -d ubuntu -u root bash -ic "unlink /etc/resolv.conf"
+      wsl -d ubuntu -u root bash -ic "echo nameserver 1.1.1.1 > /etc/resolv.conf"
   register: wsl_default_user
 
 - name: Debug wsl_default_user
@@ -71,6 +75,28 @@
   when:
     - ssh_key_stat.stat.exists
 
+- name: Experimenting with MTU size due to WSL -> debian based SSH communication issues
+  block:
+
+    # netsh interface ipv4 show subinterface
+    # netsh interface ipv4 set subinterface "vEthernet (WSL)" mtu=1350 store=persistent
+    - name: Check MTU of 'vEthernet (WSL)' interface
+      win_shell: "(Get-NetIPInterface -InterfaceAlias 'vEthernet (WSL)').NlMtu"
+      changed_when: False
+      register: wsl_mtu
+
+    - name: debug wsl_mtu
+      debug:
+        var: wsl_mtu
+        verbosity: "{{ verbosity_level }}"
+
+    - name: Change MTU of 'vEthernet (WSL)' interface
+      win_shell: "Set-NetIPInterface -InterfaceAlias 'vEthernet (WSL)' -NlMtuBytes {{ wsl_mtu_size }} -AddressFamily 'IPv4'"
+      changed_when: wsl_mtu.stdout|trim != wsl_mtu_size
+
+  when:
+    - configure_wsl_mtu
+
 - name: Copy scripts to ansible remote path
   ansible.windows.win_copy:
     src: "files/{{ item.script }}"
@@ -94,23 +120,4 @@
     icon: C:\Windows\System32\wsl.exe,0
     directory: "\\\\wsl$\\ubuntu\\home\\{{ ansible_user }}"
 
-- name: Experimenting with MTU size due to WSL -> debian based SSH communication issues
-  block:
 
-    # netsh interface ipv4 show subinterface
-    - name: Check MTU of 'vEthernet (WSL)' interface
-      win_shell: "(Get-NetIPInterface -InterfaceAlias 'vEthernet (WSL)').NlMtu"
-      changed_when: False
-      register: wsl_mtu
-
-    - name: debug wsl_mtu
-      debug:
-        var: wsl_mtu
-        verbosity: "{{ verbosity_level }}"
-
-    - name: Change MTU of 'vEthernet (WSL)' interface
-      win_shell: "Set-NetIPInterface -InterfaceAlias 'vEthernet (WSL)' -NlMtuBytes {{ wsl_mtu_size }} -AddressFamily 'IPv4'"
-      changed_when: wsl_mtu.stdout|trim != wsl_mtu_size
-
-  when:
-    - configure_wsl_mtu
