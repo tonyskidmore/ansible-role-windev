@@ -79,12 +79,12 @@ vscode_extensions:
 
 install_pre_commit: yes
 install_wsl: yes
-use_wsl_install: no
+use_wsl_install: yes
 # relaced https://aka.ms/wslubuntu2004
 ubuntu_root_fs_url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-wsl.rootfs.tar.gz
 ubuntu_md5sums: https://cloud-images.ubuntu.com/focal/current/MD5SUMS
 
-configure_wsl: yes
+configure_wsl: no
 configure_wsl_update: yes
 configure_wsl_scripts:
   - script: wsl_update.sh
