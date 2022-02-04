@@ -8,6 +8,11 @@
 #   when:
 #     - configure_wsl_update
 
+- name: Create ansible directory
+  ansible.windows.win_file:
+    path: "{{ ansible_remote_path }}"
+    state: directory
+
 - name: Copy scripts to ansible remote path
   ansible.windows.win_copy:
     src: "files/{{ item.script }}"
