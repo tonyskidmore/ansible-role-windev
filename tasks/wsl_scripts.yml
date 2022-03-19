@@ -28,7 +28,7 @@
   ansible.windows.win_reboot:
   register: wsl_win_reboot
   when:
-    - wsl_script_item.win_reboot | default('no')
+    - wsl_script_item.win_reboot
 
 - name: Debug wsl_win_reboot
   debug:

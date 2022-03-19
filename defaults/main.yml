@@ -92,12 +92,15 @@ configure_wsl_scripts:
   - script: wsl_update.sh
     user: root
     terminate_post_script: yes
+    win_reboot: no
   - script: update_python_deps.sh
     user: root
     terminate_post_script: yes
+    win_reboot: no
   - script: install_pipx.sh
     user: "{{ ansible_user }}"
     terminate_post_script: yes
+    win_reboot: no
   - script: install_ansible.sh
     user: "{{ ansible_user }}"
     terminate_post_script: no
