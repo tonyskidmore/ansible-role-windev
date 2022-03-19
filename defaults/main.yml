@@ -100,7 +100,8 @@ configure_wsl_scripts:
     terminate_post_script: yes
   - script: install_ansible.sh
     user: "{{ ansible_user }}"
-    terminate_post_script: yes
+    terminate_post_script: no
+    win_reboot: yes
   - script: install_podman.sh
     user: "{{ ansible_user }}"
     terminate_post_script: yes
