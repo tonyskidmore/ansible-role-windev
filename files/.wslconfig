@@ -1,0 +1,5 @@
+# https://docs.microsoft.com/en-us/windows/wsl/wsl-config
+[wsl2]
+memory=8GB
+**swapFile=0**
+swap=0

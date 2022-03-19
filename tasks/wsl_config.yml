@@ -8,6 +8,12 @@
 #   when:
 #     - configure_wsl_update
 
+# https://askubuntu.com/questions/1248825/how-can-i-fix-internet-connection-issues-on-wsl2
+- name: Copy .wslconfig to remote profile path
+  ansible.windows.win_copy:
+    src: "files/.wslconfig"
+    dest: "{{ win_user_profile_path }}/.wslconfig"
+
 - name: Create ansible directory
   ansible.windows.win_file:
     path: "{{ ansible_remote_path }}"
@@ -34,6 +40,7 @@
       # wsl -d ubuntu -u root bash -ic "echo 'generateResolvConf = false' >> /etc/wsl.conf"
       # wsl -d ubuntu -u root bash -ic "unlink /etc/resolv.conf"
       # wsl -d ubuntu -u root bash -ic "echo nameserver 1.1.1.1 > /etc/resolv.conf"
+      # wsl -d ubuntu -u root bash -ic "echo nameserver 8.8.8.8 > /etc/resolv.conf"
   register: wsl_default_user
 
 - name: Debug wsl_default_user

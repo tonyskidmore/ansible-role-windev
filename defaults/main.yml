@@ -4,6 +4,8 @@ verbosity_level: 0
 
 ansible_remote_path: "{{ ansible_facts['env']['ProgramData'] }}\\ansible"
 
+win_user_profile_path: "{{ ansible_facts['env']['USERPROFILE'] }}"
+
 terraform_packages:
   - terraform
   - terraform-docs
@@ -97,6 +99,9 @@ configure_wsl_scripts:
     user: "{{ ansible_user }}"
     terminate_post_script: yes
   - script: install_ansible.sh
+    user: "{{ ansible_user }}"
+    terminate_post_script: yes
+  - script: install_podman.sh
     user: "{{ ansible_user }}"
     terminate_post_script: yes
 

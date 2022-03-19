@@ -25,3 +25,4 @@
     seconds: 10
   when:
     - wsl_script_item.terminate_post_script
+
