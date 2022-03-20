@@ -1,5 +1,7 @@
 # https://docs.microsoft.com/en-us/windows/wsl/wsl-config
 [wsl2]
-memory=8GB
-**swapFile=0**
+memory=4GB
+processors=2
 swap=0
+# swap=8GB
+swapfile=C:\\temp\\wsl-swap.vhdx
