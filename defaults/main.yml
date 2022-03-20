@@ -108,6 +108,7 @@ configure_wsl_scripts:
   - script: install_podman.sh
     user: "{{ ansible_user }}"
     terminate_post_script: yes
+    win_reboot: no
 
 configure_wsl_mtu: false
 wsl_mtu_size: 1472

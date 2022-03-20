@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/home/adminuser/.local/bin/pipx install ansible[azure] --include-deps
+~/.local/bin/pipx install ansible[azure] --include-deps
 
 # put SSH private key file in place
 if [[ -f /mnt/c/ProgramData/ansible/id_rsa ]]
