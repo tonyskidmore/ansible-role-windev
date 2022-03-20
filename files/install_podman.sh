@@ -1,11 +1,11 @@
 #!/bin/bash
 
-mkdir -p $HOME/ansible
+mkdir -p ~/ansible
 
-ansible-galaxy install diodonfrost.podman
+~/.local/bin/ansible-galaxy install diodonfrost.podman
 
 # prepare ansible configuration file
-cat > $HOME/ansible/podman.yml <<EOF
+cat > ~/ansible/podman.yml <<EOF
 ---
 - name: Install podman
   hosts: localhost
@@ -16,6 +16,6 @@ cat > $HOME/ansible/podman.yml <<EOF
        become: yes
 EOF
 
-ansible-playbook $HOME/ansible/podman.yml
+~/.local/bin/ansible-playbook $HOME/ansible/podman.yml
 
-pipx install podman-compose
+~/.local/bin/pipx install podman-compose
