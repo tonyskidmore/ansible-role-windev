@@ -28,8 +28,5 @@ echo "events_logger = 'file'" >> ~/.config/containers/containers.conf
 
 # sudo ln -s /mnt/c/Users/adminuser/workspace  ~/podman_workspace
 
-# TODO: make idempotent
-echo "alias docker='podman'" >> ~/.bashrc
-echo "alias docker-compose='podman-compose'" >> ~/.bashrc
-# grep -q -e "alias docker=podman" ~/.bashrc || sed -i -e '$aalias docker=podman' ~/.bashrc
-# grep -q -e "alias docker-compose=podman" ~/.bashrc || sed -i -e '$aalias docker-compose=podman-compose' ~/.bashrc
+grep -q -e "alias docker=podman" ~/.bashrc || sed -i -e '$aalias docker=podman' ~/.bashrc
+grep -q -e "alias docker-compose=podman" ~/.bashrc || sed -i -e '$aalias docker-compose=podman-compose' ~/.bashrc
