@@ -89,6 +89,10 @@ ubuntu_md5sums: https://cloud-images.ubuntu.com/focal/current/MD5SUMS
 configure_wsl: yes
 configure_wsl_update: yes
 configure_wsl_scripts:
+  - script: force_ipv4.sh
+    user: root
+    terminate_post_script: no
+    win_reboot: yes
   - script: wsl_update.sh
     user: root
     terminate_post_script: yes
