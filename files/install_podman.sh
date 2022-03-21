@@ -16,4 +16,18 @@ then
   echo -e "[registries.search]\nregistries = ['docker.io', 'quay.io']" | sudo tee /etc/containers/registries.conf
 fi
 
+podman info
+
+mkdir ~/.config/containers
+# TODO: make idempotent
+echo "[engine]" >> ~/.config/containers/containers.conf
+echo "cgroup_manager = 'cgroupfs'" >> ~/.config/containers/containers.conf
+echo "events_logger = 'file'" >> ~/.config/containers/containers.conf
+
 ~/.local/bin/pipx install podman-compose
+
+# sudo ln -s /mnt/c/Users/adminuser/workspace  ~/podman_workspace
+
+# TODO: make idempotent
+echo "alias docker='podman'" >> ~/.bashrc
+echo "alias docker-compose='podman-compose'" >> ~/.bashrc
